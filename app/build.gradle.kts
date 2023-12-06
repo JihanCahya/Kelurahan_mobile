@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.polinema.uas.sipkburengan"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.polinema.uas.sipkburengan"
