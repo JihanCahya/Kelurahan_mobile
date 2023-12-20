@@ -1,5 +1,6 @@
 package com.polinema.uas.sipkburengan
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -88,6 +89,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                             newRef.setValue(user).addOnSuccessListener {
                                 Toast.makeText(this, "Berhasil mendaftarkan akun, silahkan cek email anda untuk verifikasi", Toast.LENGTH_LONG).show()
                                 kosongkanData()
+                                finish()
                             }.addOnFailureListener {
                                 Toast.makeText(this, "Gagal menyimpan data ke database", Toast.LENGTH_LONG).show()
                             }
@@ -100,7 +102,8 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             R.id.tvLogin -> {
-                Toast.makeText(this,"LOGIN",Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             }
         }
     }
