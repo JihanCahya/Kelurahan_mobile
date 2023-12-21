@@ -84,10 +84,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     val akses = dataSnapshot.child("akses").value as String
+                    val nama_user = dataSnapshot.child("nama").value as String
                     if (akses == "Admin") {
-                        Toast.makeText(this@LoginActivity, "Admin", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@LoginActivity, "Selamat Datang $nama_user" , Toast.LENGTH_LONG).show()
                     } else if(akses == "Masyarakat") {
-                        Toast.makeText(this@LoginActivity, "Masyarakat", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@LoginActivity, "Selamat Datang $nama_user" , Toast.LENGTH_LONG).show()
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        startActivity(intent)
                     }
                 } else {
                     Toast.makeText(this@LoginActivity, "Data pengguna tidak ditemukan", Toast.LENGTH_LONG).show()
