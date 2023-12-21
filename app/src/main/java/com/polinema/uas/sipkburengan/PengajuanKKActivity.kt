@@ -2,6 +2,7 @@ package com.polinema.uas.sipkburengan
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
@@ -102,10 +103,20 @@ class PengajuanKKActivity : AppCompatActivity() {
         builder.setTitle("BERHASIL")
         builder.setMessage(message)
         builder.setPositiveButton("Ok") { _, _ ->
+            // Setelah menambahkan data, tampilkan notifikasi berhasil
+            showToast("Data Pengajuan berhasil diunggah!")
+
+            // Kembali ke MainActivity
+            val mainIntent = Intent(this, MainActivity::class.java)
+            startActivity(mainIntent)
             finish()
         }
         val dialog = builder.create()
         dialog.show()
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showErrorDialog(message: String) {
