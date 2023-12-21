@@ -6,118 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/imLogo"
-        android:layout_width="match_parent"
-        android:layout_height="113dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/icon" />
-
-    <ImageButton
-        android:id="@+id/btnProfilKelurahan"
-        android:layout_width="99dp"
-        android:layout_height="97dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="33dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imLogo"
-        tools:ignore="SpeakableTextPresentCheck"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <ImageButton
-        android:id="@+id/btnInfoPublik"
-        android:layout_width="99dp"
-        android:layout_height="97dp"
-        android:layout_marginStart="17dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnProfilKelurahan"
-        app:layout_constraintStart_toEndOf="@+id/btnProfilKelurahan"
-        app:layout_constraintTop_toTopOf="@+id/btnProfilKelurahan"
-        tools:ignore="SpeakableTextPresentCheck"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <ImageButton
-        android:id="@+id/btnLayanan"
-        android:layout_width="99dp"
-        android:layout_height="97dp"
-        android:layout_marginEnd="40dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnInfoPublik"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnInfoPublik"
-        tools:ignore="SpeakableTextPresentCheck"
-        tools:srcCompat="@tools:sample/avatars" />
-
     <TextView
-        android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Profil Kelurahan"
-        app:layout_constraintEnd_toEndOf="@+id/btnProfilKelurahan"
-        app:layout_constraintStart_toStartOf="@+id/btnProfilKelurahan"
-        app:layout_constraintTop_toBottomOf="@+id/btnProfilKelurahan" />
+        android:text="hallo viola"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Informasi Publik"
-        app:layout_constraintEnd_toEndOf="@+id/btnInfoPublik"
-        app:layout_constraintStart_toStartOf="@+id/btnInfoPublik"
-        app:layout_constraintTop_toBottomOf="@+id/btnInfoPublik" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="102dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="20dp"
-        android:text="Layanan Administrasi"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/btnLayanan"
-        app:layout_constraintStart_toStartOf="@+id/btnLayanan"
-        app:layout_constraintTop_toBottomOf="@+id/btnLayanan" />
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="282dp"
-        android:layout_height="148dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="331dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <ImageView
-                android:layout_width="106dp"
-                android:layout_height="44dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/sample_news_thumbnail"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Judul Berita"
-                android:textAlignment="center"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Highlight Berita"
-                android:textSize="14sp" />
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

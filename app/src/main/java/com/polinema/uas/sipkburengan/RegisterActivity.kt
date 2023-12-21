@@ -90,8 +90,8 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                                 Toast.makeText(this, "Berhasil mendaftarkan akun, silahkan cek email anda untuk verifikasi", Toast.LENGTH_LONG).show()
                                 kosongkanData()
                                 finish()
-                            }.addOnFailureListener {
-                                Toast.makeText(this, "Gagal menyimpan data ke database", Toast.LENGTH_LONG).show()
+                            }.addOnFailureListener { e ->
+                                Toast.makeText(this, "Gagal menyimpan data ke database. Error: ${e.message}", Toast.LENGTH_LONG).show()
                             }
                         } else {
                             Toast.makeText(this, "Tidak dapat mendaftar, periksa data", Toast.LENGTH_LONG).show()
