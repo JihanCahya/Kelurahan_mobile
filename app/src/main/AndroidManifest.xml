@@ -15,6 +15,9 @@
         android:theme="@style/Theme.SIPKBurengan"
         tools:targetApi="31">
         <activity
+            android:name=".PengajuanKKActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
@@ -29,6 +32,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".PengajuanKtpActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

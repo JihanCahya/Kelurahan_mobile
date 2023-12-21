@@ -11,7 +11,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.polinema.uas.sipkburengan.databinding.ActivityPengajuanKtpBinding
 
-class PengajuanKtp : AppCompatActivity() {
+class PengajuanKtpActivity : AppCompatActivity() {
     lateinit var b: ActivityPengajuanKtpBinding
     private lateinit var databaseReference: DatabaseReference
     private lateinit var storageReference: StorageReference
@@ -36,7 +36,7 @@ class PengajuanKtp : AppCompatActivity() {
         val btnPilihGambarRT = b.uploadPengantarRTButton
         btnPilihGambarRT.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
+            intent.type = "image/pengajuan_ktp/*"
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
         }
 
@@ -44,7 +44,7 @@ class PengajuanKtp : AppCompatActivity() {
         val btnPilihGambarKTP = b.uploadKTPButton
         btnPilihGambarKTP.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
+            intent.type = "image/pengajuan_ktp/*"
             startActivityForResult(intent, PICK_IMAGE_REQUEST + 1) // Change request code
         }
 
@@ -70,7 +70,7 @@ class PengajuanKtp : AppCompatActivity() {
         // Format nama file dengan menambahkan timestamp dan jenis file ke dalamnya
         val fileName = "$idPengajuan-$imageType-$timestamp.jpg"
 
-        val imageRef = storageReference.child("images/$fileName")
+        val imageRef = storageReference.child("images/pengajuan_ktp/$fileName")
         val uploadTask = imageRef.putFile(imageUri)
 
         uploadTask.addOnSuccessListener { taskSnapshot ->
