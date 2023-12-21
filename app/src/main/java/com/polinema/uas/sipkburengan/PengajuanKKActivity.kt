@@ -1,4 +1,5 @@
 package com.polinema.uas.sipkburengan
+
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,6 +11,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.polinema.uas.sipkburengan.databinding.ActivityPengajuanKkBinding
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 class PengajuanKKActivity : AppCompatActivity() {
     lateinit var b: ActivityPengajuanKkBinding
     private lateinit var databaseReference: DatabaseReference
@@ -52,18 +57,22 @@ class PengajuanKKActivity : AppCompatActivity() {
                 // Generate unique ID for each entry
                 val idPengajuan = databaseReference.push().key
 
+                // Mendapatkan tanggal hari ini dalam format "dd/MM/yyyy"
+                val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+
                 // Upload gambar Pengantar RT
-                uploadImage(idPengajuan!!, "pengantar_rt", imageUriPengantarRT!!)
+                uploadImage(idPengajuan!!, "pengantar_rt", imageUriPengantarRT!!, currentDate)
 
                 // Upload gambar KTP
-                uploadImage(idPengajuan, "ktp", imageUriKTP!!)
+                uploadImage(idPengajuan, "ktp", imageUriKTP!!, currentDate)
             } else {
                 // Jika salah satu atau kedua gambar tidak dipilih, tampilkan pesan kesalahan
                 showErrorDialog("Pilih gambar Pengantar RT dan KTP terlebih dahulu")
             }
         }
     }
-    private fun uploadImage(idPengajuan: String, imageType: String, imageUri: Uri) {
+
+    private fun uploadImage(idPengajuan: String, imageType: String, imageUri: Uri, currentDate: String) {
         val timestamp = System.currentTimeMillis() // timestamp untuk menyertakan waktu unik
 
         // Format nama file dengan menambahkan timestamp dan jenis file ke dalamnya
@@ -77,7 +86,7 @@ class PengajuanKKActivity : AppCompatActivity() {
                 val imageUrl = uri.toString()
 
                 // Setelah mendapatkan URL gambar yang benar, simpan data ke Firebase Database
-                val pengajuan = Pengajuan(idPengajuan, imageUrl)
+                val pengajuan = Pengajuan(idPengajuan, imageUrl, currentDate)
                 databaseReference.child(idPengajuan).setValue(pengajuan)
 
                 // Tampilkan pesan sukses
@@ -95,7 +104,8 @@ class PengajuanKKActivity : AppCompatActivity() {
 
     data class Pengajuan(
         val id: String = "",
-        val imageUrl: String = ""
+        val imageUrl: String = "",
+        val tanggalPengajuan: String = ""
     )
 
     private fun showSuccessDialog(message: String) {

@@ -11,7 +11,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.polinema.uas.sipkburengan.databinding.ActivityPengajuanKtpBinding
-
+import java.text.SimpleDateFormat
+import java.util.Date
 class PengajuanKtpActivity : AppCompatActivity() {
     lateinit var b: ActivityPengajuanKtpBinding
     private lateinit var databaseReference: DatabaseReference
@@ -48,21 +49,21 @@ class PengajuanKtpActivity : AppCompatActivity() {
         btnPilihGambarKTP.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/pengajuan_ktp/*"
-            startActivityForResult(intent, PICK_IMAGE_REQUEST+1) // Change request code
+            startActivityForResult(intent, PICK_IMAGE_REQUEST + 1) // Change request code
         }
 
         val btnPilihGambarKK = b.UpKkKtp
         btnPilihGambarKK.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/pengajuan_ktp/*"
-            startActivityForResult(intent, PICK_IMAGE_REQUEST+2) // Change request code
+            startActivityForResult(intent, PICK_IMAGE_REQUEST + 2) // Change request code
         }
 
         val btnPilihGambarAkta = b.UpAktaKtp
         btnPilihGambarAkta.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/pengajuan_ktp/*"
-            startActivityForResult(intent, PICK_IMAGE_REQUEST+3) // Change request code
+            startActivityForResult(intent, PICK_IMAGE_REQUEST + 3) // Change request code
         }
 
         btnSimpan.setOnClickListener {
@@ -70,17 +71,20 @@ class PengajuanKtpActivity : AppCompatActivity() {
                 // Generate unique ID for each entry
                 val idPengajuan = databaseReference.push().key
 
+                // Mendapatkan tanggal hari ini
+                val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Date())
+
                 // Upload gambar Pengantar RT
-                uploadImage(idPengajuan!!, "pengantar_rt", imageUriPengantarRT!!)
+                uploadImage(idPengajuan!!, "pengantar_rt", imageUriPengantarRT!!, currentDate)
 
                 // Upload gambar KTP
-                uploadImage(idPengajuan, "ktp", imageUriKTP!!)
+                uploadImage(idPengajuan, "ktp", imageUriKTP!!, currentDate)
 
                 // Upload gambar kk
-                uploadImage(idPengajuan, "kk", imageUriKK!!)
+                uploadImage(idPengajuan, "kk", imageUriKK!!, currentDate)
 
                 // Upload gambar akta
-                uploadImage(idPengajuan, "akta", imageUriAkta!!)
+                uploadImage(idPengajuan, "akta", imageUriAkta!!, currentDate)
 
             } else {
                 // Jika salah satu atau kedua gambar tidak dipilih, tampilkan pesan kesalahan
@@ -88,7 +92,7 @@ class PengajuanKtpActivity : AppCompatActivity() {
             }
         }
     }
-    private fun uploadImage(idPengajuan: String, imageType: String, imageUri: Uri) {
+    private fun uploadImage(idPengajuan: String, imageType: String, imageUri: Uri, currentDate: String) {
         val timestamp = System.currentTimeMillis() // timestamp untuk menyertakan waktu unik
 
         // Format nama file dengan menambahkan timestamp dan jenis file ke dalamnya
@@ -102,13 +106,13 @@ class PengajuanKtpActivity : AppCompatActivity() {
                 val imageUrl = uri.toString()
 
                 // Setelah mendapatkan URL gambar yang benar, simpan data ke Firebase Database
-                val pengajuan = Pengajuan(idPengajuan, imageUrl)
+                val pengajuan = Pengajuan(idPengajuan, imageUrl, currentDate)
                 databaseReference.child(idPengajuan).setValue(pengajuan)
 
                 // Tampilkan pesan sukses
-                showSuccessDialog("Data Pengajuan berhasil diunggah!")
+                showSuccessDialog("Data Pengajuan berhasil diunggah!", idPengajuan)
             }
-        }.addOnFailureListener { exception ->
+    }.addOnFailureListener { exception ->
             // Penanganan kesalahan jika ada kesalahan saat mengunggah gambar
             showErrorDialog("Terjadi kesalahan saat mengunggah gambar: ${exception.localizedMessage}")
         }.addOnProgressListener { taskSnapshot ->
@@ -120,10 +124,12 @@ class PengajuanKtpActivity : AppCompatActivity() {
 
     data class Pengajuan(
         val id: String = "",
-        val imageUrl: String = ""
+        val imageUrl: String = "",
+        val tanggalPengajuan: String = ""
     )
 
-    private fun showSuccessDialog(message: String) {
+
+    private fun showSuccessDialog(message: String, idPengajuan: String) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("BERHASIL")
         builder.setMessage(message)
