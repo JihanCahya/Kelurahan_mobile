@@ -50,7 +50,8 @@
             android:id="@+id/edEmailL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Masukkan email" />
+            android:hint="Masukkan email"
+            android:textColor="#000000" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -69,7 +70,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Masukkan password"
-            android:inputType="text|textPassword" />
+            android:inputType="text|textPassword"
+            android:textColor="#000000" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <CheckBox
@@ -78,6 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Show Password"
+        android:textColor="#000000"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
