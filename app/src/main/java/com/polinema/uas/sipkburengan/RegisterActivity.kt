@@ -75,8 +75,8 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                                 )
                                 currentUser!!.sendEmailVerification()
                             }
-                            val newRef = db.push()
-                            val uniqueKey = newRef.key
+
+                            val id = currentUser!!.uid
 
                             user.nik = b.edNik.text.toString()
                             user.nama = b.edNamaLengkap.text.toString()
@@ -85,8 +85,11 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                             user.no = b.edTelepon.text.toString()
                             user.akses = "Masyarakat"
                             user.password = b.edPasswordR.text.toString()
-                            user.id = uniqueKey
-                            newRef.setValue(user).addOnSuccessListener {
+                            user.id = id
+
+                            val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("Data_user")
+
+                            databaseReference.child(currentUser!!.uid).setValue(user).addOnSuccessListener {
                                 Toast.makeText(this, "Berhasil mendaftarkan akun, silahkan cek email anda untuk verifikasi", Toast.LENGTH_LONG).show()
                                 kosongkanData()
                                 finish()

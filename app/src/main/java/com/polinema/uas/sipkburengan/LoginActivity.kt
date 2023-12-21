@@ -9,6 +9,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.polinema.uas.sipkburengan.databinding.ActivityLoginBinding
 
@@ -53,9 +57,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                             currentUser = auth.currentUser
                             if(currentUser != null){
                                 if(currentUser!!.isEmailVerified){
-                                    Toast.makeText(this, "Login berhasil", Toast.LENGTH_LONG).show()
-                                    val intent = Intent(this, MainActivity::class.java)
-                                    startActivity(intent)
+                                    checkUserRole(currentUser!!.uid)
                                 } else {
                                     Toast.makeText(this, "Email anda belum terverifikasi", Toast.LENGTH_LONG).show()
                                 }
@@ -73,5 +75,28 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
         }
+    }
+
+    private fun checkUserRole(userId: String) {
+        val databaseReference = FirebaseDatabase.getInstance().reference.child("Data_user").child(userId)
+
+        databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val akses = dataSnapshot.child("akses").value as String
+                    if (akses == "Admin") {
+                        Toast.makeText(this@LoginActivity, "Admin", Toast.LENGTH_LONG).show()
+                    } else if(akses == "Masyarakat") {
+                        Toast.makeText(this@LoginActivity, "Masyarakat", Toast.LENGTH_LONG).show()
+                    }
+                } else {
+                    Toast.makeText(this@LoginActivity, "Data pengguna tidak ditemukan", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Toast.makeText(this@LoginActivity, "Terjadi kesalahan saat mengakses database", Toast.LENGTH_LONG).show()
+            }
+        })
     }
 }
