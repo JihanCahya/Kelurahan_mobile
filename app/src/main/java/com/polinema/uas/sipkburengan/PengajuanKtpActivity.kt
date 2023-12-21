@@ -17,6 +17,8 @@ class PengajuanKtpActivity : AppCompatActivity() {
     private lateinit var storageReference: StorageReference
     private var imageUriPengantarRT: Uri? = null
     private var imageUriKTP: Uri? = null
+    private var imageUriKK: Uri? = null
+    private var imageUriAkta: Uri? = null
     private val PICK_IMAGE_REQUEST = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,10 +32,10 @@ class PengajuanKtpActivity : AppCompatActivity() {
         // Inisialisasi StorageReference ke Firebase Storage
         storageReference = FirebaseStorage.getInstance().reference
 
-        val btnSimpan = b.uploadButton
+        val btnSimpan = b.upKtp
 
         // Tombol untuk memilih gambar Pengantar RT
-        val btnPilihGambarRT = b.uploadPengantarRTButton
+        val btnPilihGambarRT = b.UpPKtp
         btnPilihGambarRT.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/pengajuan_ktp/*"
@@ -41,15 +43,29 @@ class PengajuanKtpActivity : AppCompatActivity() {
         }
 
         // Tombol untuk memilih gambar KTP
-        val btnPilihGambarKTP = b.uploadKTPButton
+        val btnPilihGambarKTP = b.UpKtpKtp
         btnPilihGambarKTP.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/pengajuan_ktp/*"
-            startActivityForResult(intent, PICK_IMAGE_REQUEST + 1) // Change request code
+            startActivityForResult(intent, PICK_IMAGE_REQUEST+1) // Change request code
+        }
+
+        val btnPilihGambarKK = b.UpKkKtp
+        btnPilihGambarKK.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/pengajuan_ktp/*"
+            startActivityForResult(intent, PICK_IMAGE_REQUEST+2) // Change request code
+        }
+
+        val btnPilihGambarAkta = b.UpAktaKtp
+        btnPilihGambarAkta.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/pengajuan_ktp/*"
+            startActivityForResult(intent, PICK_IMAGE_REQUEST+3) // Change request code
         }
 
         btnSimpan.setOnClickListener {
-            if (imageUriPengantarRT != null && imageUriKTP != null) {
+            if (imageUriPengantarRT != null && imageUriKTP != null && imageUriKK != null && imageUriAkta != null) {
                 // Generate unique ID for each entry
                 val idPengajuan = databaseReference.push().key
 
@@ -58,9 +74,16 @@ class PengajuanKtpActivity : AppCompatActivity() {
 
                 // Upload gambar KTP
                 uploadImage(idPengajuan, "ktp", imageUriKTP!!)
+
+                // Upload gambar kk
+                uploadImage(idPengajuan, "kk", imageUriKK!!)
+
+                // Upload gambar akta
+                uploadImage(idPengajuan, "akta", imageUriAkta!!)
+
             } else {
                 // Jika salah satu atau kedua gambar tidak dipilih, tampilkan pesan kesalahan
-                showErrorDialog("Pilih gambar Pengantar RT dan KTP terlebih dahulu")
+                showErrorDialog("Pilih gambar Pengantar terlebih dahulu")
             }
         }
     }
@@ -104,12 +127,14 @@ class PengajuanKtpActivity : AppCompatActivity() {
         builder.setTitle("BERHASIL")
         builder.setMessage(message)
         builder.setPositiveButton("Ok") { _, _ ->
+            // Setelah menambahkan data, kembali ke MainActivity
+            val mainIntent = Intent(this, MainActivity::class.java)
+            startActivity(mainIntent)
             finish()
         }
         val dialog = builder.create()
         dialog.show()
     }
-
     private fun showErrorDialog(message: String) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("ERROR")
@@ -127,12 +152,21 @@ class PengajuanKtpActivity : AppCompatActivity() {
                 // Pengantar RT
                 PICK_IMAGE_REQUEST -> {
                     imageUriPengantarRT = data.data
-                    b.uploadPengantarRTImageView.setImageURI(imageUriPengantarRT)
+                    b.ImvPKtp.setImageURI(imageUriPengantarRT)
                 }
                 // KTP
                 PICK_IMAGE_REQUEST + 1 -> {
                     imageUriKTP = data.data
-                    b.uploadKTPImageView.setImageURI(imageUriKTP)
+                    b.ImvKtpKtp.setImageURI(imageUriKTP)
+                }
+                PICK_IMAGE_REQUEST + 2 -> {
+                    imageUriKK = data.data
+                    b.ImvKkKtp.setImageURI(imageUriKK)
+                }
+                // KTP
+                PICK_IMAGE_REQUEST + 3 -> {
+                    imageUriAkta = data.data
+                    b.ImvAktaKtp.setImageURI(imageUriAkta)
                 }
             }
         }

@@ -8,9 +8,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.polinema.uas.sipkburengan.databinding.ActivityPengajuanKkactivityBinding
+import com.polinema.uas.sipkburengan.databinding.ActivityPengajuanKkBinding
 class PengajuanKKActivity : AppCompatActivity() {
-    lateinit var b: ActivityPengajuanKkactivityBinding
+    lateinit var b: ActivityPengajuanKkBinding
     private lateinit var databaseReference: DatabaseReference
     private lateinit var storageReference: StorageReference
     private var imageUriPengantarRT: Uri? = null
@@ -19,7 +19,7 @@ class PengajuanKKActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        b = ActivityPengajuanKkactivityBinding.inflate(layoutInflater)
+        b = ActivityPengajuanKkBinding.inflate(layoutInflater)
         setContentView(b.root)
 
         // Inisialisasi DatabaseReference ke Firebase Realtime Database
@@ -28,10 +28,10 @@ class PengajuanKKActivity : AppCompatActivity() {
         // Inisialisasi StorageReference ke Firebase Storage
         storageReference = FirebaseStorage.getInstance().reference
 
-        val btnSimpan = b.btnUploadKK
+        val btnSimpan = b.UpKk
 
         // Tombol untuk memilih gambar Pengantar RT
-        val btnPilihGambarRT = b.btnRt
+        val btnPilihGambarRT = b.UpPKk
         btnPilihGambarRT.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/pengajuan_kk/*"
@@ -39,7 +39,7 @@ class PengajuanKKActivity : AppCompatActivity() {
         }
 
         // Tombol untuk memilih gambar KTP
-        val btnPilihGambarKTP = b.btnKtp
+        val btnPilihGambarKTP = b.UpKtpKk
         btnPilihGambarKTP.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/pengajuan_kk/*"
@@ -124,12 +124,12 @@ class PengajuanKKActivity : AppCompatActivity() {
                 // Pengantar RT
                 PICK_IMAGE_REQUEST -> {
                     imageUriPengantarRT = data.data
-                    b.imvRt.setImageURI(imageUriPengantarRT)
+                    b.ImvPKk.setImageURI(imageUriPengantarRT)
                 }
                 // KTP
                 PICK_IMAGE_REQUEST + 1 -> {
                     imageUriKTP = data.data
-                    b.imvKtp.setImageURI(imageUriKTP)
+                    b.ImvKtpKk.setImageURI(imageUriKTP)
                 }
             }
         }
