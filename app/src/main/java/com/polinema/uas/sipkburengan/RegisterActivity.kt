@@ -31,6 +31,10 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
         b.btnRegister.setOnClickListener(this)
         b.tvLogin.setOnClickListener(this)
+
+        b.cbPasswordR.setOnCheckedChangeListener { _, isChecked ->
+            showHidePassword(isChecked)
+        }
     }
     override fun onStart() {
         super.onStart()
@@ -44,6 +48,16 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         b.edAlamat.setText("")
         b.edTelepon.setText("")
         b.edPasswordR.setText("")
+    }
+
+    private fun showHidePassword(isChecked: Boolean) {
+        val inputType = if (isChecked) {
+            android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+        } else {
+            android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+        }
+        b.edPasswordR.inputType = inputType
+        b.edPasswordR.setSelection(b.edPasswordR.text!!.length)
     }
 
     private fun isFormValid(): Boolean {

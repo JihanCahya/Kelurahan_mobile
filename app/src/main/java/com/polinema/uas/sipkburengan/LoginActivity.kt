@@ -31,11 +31,24 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         b.tvRegister.setOnClickListener(this)
         b.btnLogin.setOnClickListener(this)
 
+        b.cbPassword.setOnCheckedChangeListener { _, isChecked ->
+            showHidePassword(isChecked)
+        }
     }
 
     fun kosongkanData(){
         b.edEmailL.setText("")
         b.edPasswordL.setText("")
+    }
+
+    private fun showHidePassword(isChecked: Boolean) {
+        val inputType = if (isChecked) {
+            android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+        } else {
+            android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+        }
+        b.edPasswordL.inputType = inputType
+        b.edPasswordL.setSelection(b.edPasswordL.text!!.length)
     }
 
     private fun isFormValid(): Boolean {
