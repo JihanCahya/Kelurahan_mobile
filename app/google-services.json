@@ -1,14 +1,13 @@
 {
   "project_info": {
-    "project_number": "961103760391",
-    "firebase_url": "https://kelurahan-mobile-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "kelurahan-mobile",
-    "storage_bucket": "kelurahan-mobile.appspot.com"
+    "project_number": "385022294817",
+    "project_id": "uas-mobile-ada2e",
+    "storage_bucket": "uas-mobile-ada2e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:961103760391:android:55188eb86efc95ea33aea2",
+        "mobilesdk_app_id": "1:385022294817:android:66f292ea7534ade47b5c60",
         "android_client_info": {
           "package_name": "com.polinema.uas.sipkburengan"
         }
@@ -16,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD60UWrSSJEniaUQtlD67eCZwJYQMFN1xg"
+          "current_key": "AIzaSyD3UBTxl9_RktD6Nu-mN7RZYNmHqok5AjI"
         }
       ],
       "services": {
