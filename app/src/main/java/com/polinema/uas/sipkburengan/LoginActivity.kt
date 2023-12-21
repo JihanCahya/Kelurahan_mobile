@@ -54,6 +54,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                             if(currentUser != null){
                                 if(currentUser!!.isEmailVerified){
                                     Toast.makeText(this, "Login berhasil", Toast.LENGTH_LONG).show()
+                                    val intent = Intent(this, MainActivity::class.java)
+                                    startActivity(intent)
                                 } else {
                                     Toast.makeText(this, "Email anda belum terverifikasi", Toast.LENGTH_LONG).show()
                                 }
