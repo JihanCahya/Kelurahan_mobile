@@ -107,6 +107,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(intent)
                     }
+                    kosongkanData()
                 } else {
                     Toast.makeText(this@LoginActivity, "Data pengguna tidak ditemukan", Toast.LENGTH_LONG).show()
                 }
