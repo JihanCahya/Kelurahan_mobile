@@ -87,6 +87,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     val nama_user = dataSnapshot.child("nama").value as String
                     if (akses == "Admin") {
                         Toast.makeText(this@LoginActivity, "Selamat Datang $nama_user" , Toast.LENGTH_LONG).show()
+                        val intent = Intent(this@LoginActivity, DashboardAdminActivity::class.java)
+                        startActivity(intent)
                     } else if(akses == "Masyarakat") {
                         Toast.makeText(this@LoginActivity, "Selamat Datang $nama_user" , Toast.LENGTH_LONG).show()
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
