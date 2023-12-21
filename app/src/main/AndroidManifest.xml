@@ -13,6 +13,12 @@
         android:theme="@style/Theme.SIPKBurengan"
         tools:targetApi="31">
         <activity
+            android:name=".EditInformasiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TambahInformasiActivity"
+            android:exported="false" />
+        <activity
             android:name=".LayananAdminActivity"
             android:exported="false" />
         <activity

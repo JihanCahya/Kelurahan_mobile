@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TambahInformasiActivity">
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Tambah Informasi"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout8"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edJudulInformasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Masukkan judul infrormasi" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/spJenis"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout8"
+        app:layout_constraintStart_toStartOf="@+id/textView9"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Jenis informasi"
+        android:textColor="#100F0F"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout8"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout8" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout9"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/spJenis"
+        app:layout_constraintStart_toStartOf="@+id/spJenis"
+        app:layout_constraintTop_toBottomOf="@+id/spJenis">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edDeskripsiInformasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Masukkan deskripsi informasi"
+            android:inputType="text|textMultiLine" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Unggah foto*"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout9"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout9" />
+
+    <Button
+        android:id="@+id/btnFotoInformasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="#FF5722"
+        android:text="Pilih foto"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <Button
+        android:id="@+id/btnKembaliInformasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:backgroundTint="#8BC34A"
+        android:text="Kembali"
+        app:layout_constraintStart_toStartOf="@+id/btnFotoInformasi"
+        app:layout_constraintTop_toBottomOf="@+id/btnFotoInformasi" />
+
+    <Button
+        android:id="@+id/btnTambahInformasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:backgroundTint="#2196F3"
+        android:text="Simpan"
+        app:layout_constraintStart_toEndOf="@+id/btnKembaliInformasi"
+        app:layout_constraintTop_toTopOf="@+id/btnKembaliInformasi" />
+
+    <TextView
+        android:id="@+id/tvFotoInformasi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout9"
+        app:layout_constraintStart_toStartOf="@+id/btnFotoInformasi"
+        app:layout_constraintTop_toBottomOf="@+id/btnFotoInformasi" />
+</androidx.constraintlayout.widget.ConstraintLayout>
