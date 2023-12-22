@@ -126,7 +126,7 @@ class InformasiAdapter(context: Context, data: List<Informasi>) :
             idTV.text = "ID: ${informasi.id}"
             judulTV.text = "Judul: ${informasi.judul}"
             jenisTV.text = "Jenis: ${informasi.jenis}"
-            tanggalTV.text = "Tanggal:${informasi.tanggal}"
+            tanggalTV.text = "Tanggal: ${informasi.tanggal}"
         }
 
         // Menggunakan Glide untuk mengunduh dan menampilkan gambar dari URL

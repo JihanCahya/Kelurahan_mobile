@@ -124,7 +124,7 @@ class TambahInformasiActivity : AppCompatActivity(), View.OnClickListener {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
             imageUri = data.data
-            b.tvFotoInformasi.text = imageUri.toString()
+            b.tvFotoInformasi.text = "Foto telah diunggah"
         }
     }
 }
