@@ -28,7 +28,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(b.root)
 
         auth = Firebase.auth
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
         b.btnRegister.setOnClickListener(this)
         b.tvLogin.setOnClickListener(this)
 

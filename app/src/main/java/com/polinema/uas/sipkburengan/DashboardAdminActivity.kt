@@ -1,6 +1,7 @@
 package com.polinema.uas.sipkburengan
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -60,6 +61,9 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
     }
 
     val btnLogout = DialogInterface.OnClickListener { dialog, which ->
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
         finish()
     }
 
