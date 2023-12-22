@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
 import com.polinema.uas.sipkburengan.databinding.ActivityInformasiAdminBinding
 
 class InformasiAdminActivity : Fragment() {
@@ -45,12 +46,26 @@ class InformasiAdminActivity : Fragment() {
                 builder.setTitle("Detail Informasi")
                 builder.setMessage("Judul : ${selectedInformasi.judul}\nJenis : ${selectedInformasi.jenis}\nDeskripsi : ${selectedInformasi.deskripsi}\nTanggal : ${selectedInformasi.tanggal}")
                 builder.setPositiveButton("Hapus") { dialog, _ ->
-                    val informasiRef = db.child(selectedInformasi.id)
-                    informasiRef.removeValue()
-                    fetchInformasiData()
-                    Toast.makeText(requireContext(), "Data Berhasil Dihapus", Toast.LENGTH_LONG)
-                        .show()
-                    dialog.dismiss()
+                    val imageUrl = selectedInformasi.imageUrl
+                    if (imageUrl != null && imageUrl.isNotEmpty()){
+                        val storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl)
+                        storageRef.delete().addOnSuccessListener {
+                            val informasiRef = db.child(selectedInformasi.id)
+                            informasiRef.removeValue()
+                            fetchInformasiData()
+                            Toast.makeText(requireContext(), "Data Berhasil Dihapus", Toast.LENGTH_LONG).show()
+                            dialog.dismiss()
+                        }.addOnFailureListener {
+                            Toast.makeText(requireContext(), "Gagal menghapus foto dari storage", Toast.LENGTH_LONG).show()
+                            dialog.dismiss()
+                        }
+                    } else {
+                        val informasiRef = db.child(selectedInformasi.id)
+                        informasiRef.removeValue()
+                        fetchInformasiData()
+                        Toast.makeText(requireContext(), "Data Berhasil Dihapus", Toast.LENGTH_LONG).show()
+                        dialog.dismiss()
+                    }
                 }
                 builder.setNegativeButton("Edit") { dialog, _ ->
                     val intent = Intent(requireContext(), EditInformasiActivity::class.java)
