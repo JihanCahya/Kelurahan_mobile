@@ -43,7 +43,7 @@ class InformasiAdminActivity : Fragment() {
             if (selectedInformasi != null) {
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setTitle("Detail Informasi")
-                builder.setMessage("ID : ${selectedInformasi.id}\nJudul : ${selectedInformasi.judul}\nJenis : ${selectedInformasi.jenis}\nDeskripsi : ${selectedInformasi.deskripsi}\nTanggal : ${selectedInformasi.tanggal}")
+                builder.setMessage("Judul : ${selectedInformasi.judul}\nJenis : ${selectedInformasi.jenis}\nDeskripsi : ${selectedInformasi.deskripsi}\nTanggal : ${selectedInformasi.tanggal}")
                 builder.setPositiveButton("Hapus") { dialog, _ ->
                     val informasiRef = db.child(selectedInformasi.id)
                     informasiRef.removeValue()

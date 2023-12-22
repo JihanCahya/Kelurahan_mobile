@@ -1,12 +1,10 @@
 package com.polinema.uas.sipkburengan
 
 import android.content.Intent
-import android.icu.text.IDNA.Info
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -102,12 +100,7 @@ class TambahInformasiActivity : AppCompatActivity(), View.OnClickListener {
                             dialog.show()
                         }
                     } else {
-                        val builder = AlertDialog.Builder(this)
-                        builder.setTitle("ERROR")
-                        builder.setMessage("Pilih gambar terlebih dahulu")
-                        builder.setPositiveButton("Ya") { _, _ -> }
-                        val dialog = builder.create()
-                        dialog.show()
+                        Toast.makeText(this, "Foto harus diunggah !!!", Toast.LENGTH_LONG).show()
                     }
                 } else {
                     Toast.makeText(this, "Semua form harus diisi !!!", Toast.LENGTH_LONG).show()
