@@ -11,7 +11,7 @@
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/abril_fatface"
         android:text="Kelola Jabatan Pegawai"
         android:textColor="#000000"
@@ -20,4 +20,88 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edIdJabatan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="hint" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edJabatan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Masukkan Jabatan" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnTambahJabatan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#3F51B5"
+        android:text="Tambah"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout14"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout14" />
+
+    <Button
+        android:id="@+id/btnEditJabatan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#4CAF50"
+        android:text="Edit"
+        app:layout_constraintEnd_toStartOf="@+id/btnHapusJabatan"
+        app:layout_constraintStart_toEndOf="@+id/btnTambahJabatan"
+        app:layout_constraintTop_toTopOf="@+id/btnTambahJabatan" />
+
+    <Button
+        android:id="@+id/btnHapusJabatan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FF5722"
+        android:text="Hapus"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout14"
+        app:layout_constraintTop_toTopOf="@+id/btnTambahJabatan" />
+
+    <Button
+        android:id="@+id/btnKosongkanJabatan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#FF9800"
+        android:text="Kosongkan Form"
+        app:layout_constraintEnd_toEndOf="@+id/btnHapusJabatan"
+        app:layout_constraintStart_toStartOf="@+id/btnTambahJabatan"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditJabatan" />
+
+    <ListView
+        android:id="@+id/lvJabatan"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnKosongkanJabatan"
+        app:layout_constraintStart_toStartOf="@+id/btnKosongkanJabatan"
+        app:layout_constraintTop_toBottomOf="@+id/btnKosongkanJabatan" />
 </androidx.constraintlayout.widget.ConstraintLayout>
