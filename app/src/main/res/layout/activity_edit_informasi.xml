@@ -83,7 +83,7 @@
         android:textColor="#000000"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout11"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout12" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout11" />
 
     <Button
         android:id="@+id/btnFotoInformasi1"
@@ -99,11 +99,11 @@
         android:id="@+id/btnKembaliInformasi1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:backgroundTint="#4CAF50"
         android:text="Kembali"
         app:layout_constraintStart_toStartOf="@+id/btnFotoInformasi1"
-        app:layout_constraintTop_toBottomOf="@+id/btnFotoInformasi1" />
+        app:layout_constraintTop_toBottomOf="@+id/tvFotoInformasi1" />
 
     <Button
         android:id="@+id/btnSimpanInformasi1"
@@ -129,6 +129,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout11"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout11"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout11">

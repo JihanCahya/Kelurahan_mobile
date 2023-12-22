@@ -27,7 +27,6 @@ class EditInformasiActivity : AppCompatActivity(), View.OnClickListener {
     private var imageUri: Uri? = null
     private val PICK_IMAGE_REQUEST = 2
     lateinit var adapterSpin : ArrayAdapter<String>
-    lateinit var adapterSpin1 : ArrayAdapter<String>
     val arrayInformasi = arrayOf("Berita kelurahan", "Informasi bantuan")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -120,6 +119,9 @@ class EditInformasiActivity : AppCompatActivity(), View.OnClickListener {
                         edDeskripsiInformasi1.setText(it.deskripsi)
                         edTanggalInformasi1.setText(it.tanggal)
                         edImageUrl1.setText(it.imageUrl)
+
+                        val position = arrayInformasi.indexOf(it.jenis)
+                        b.spJenis1.setSelection(position)
                     }
                 }
             }
