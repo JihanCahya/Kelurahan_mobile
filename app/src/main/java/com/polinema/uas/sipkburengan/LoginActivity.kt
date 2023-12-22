@@ -62,6 +62,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         when(v?.id){
             R.id.btnLogin -> {
                 if (isFormValid()){
+                    b.progressBar.visibility = View.VISIBLE
                     auth.signInWithEmailAndPassword(
                         b.edEmailL.text.toString(),
                         b.edPasswordL.text.toString()
@@ -73,14 +74,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                                     checkUserRole(currentUser!!.uid)
                                 } else {
                                     Toast.makeText(this, "Email anda belum terverifikasi", Toast.LENGTH_LONG).show()
+                                    b.progressBar.visibility = View.GONE
                                 }
                             }
                         } else {
                             Toast.makeText(this, "Username/password anda salah", Toast.LENGTH_LONG).show()
+                            b.progressBar.visibility = View.GONE
                         }
                     }
                 } else {
-                    Snackbar.make(b.root, "Semua form harus diisi !!!", Snackbar.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Semua form harus diisi!!!", Toast.LENGTH_LONG).show()
                 }
             }
             R.id.tvRegister -> {
@@ -99,10 +102,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     val akses = dataSnapshot.child("akses").value as String
                     val nama_user = dataSnapshot.child("nama").value as String
                     if (akses == "Admin") {
+                        b.progressBar.visibility = View.GONE
                         Toast.makeText(this@LoginActivity, "Selamat Datang $nama_user" , Toast.LENGTH_LONG).show()
                         val intent = Intent(this@LoginActivity, DashboardAdminActivity::class.java)
                         startActivity(intent)
                     } else if(akses == "Masyarakat") {
+                        b.progressBar.visibility = View.GONE
                         Toast.makeText(this@LoginActivity, "Selamat Datang $nama_user" , Toast.LENGTH_LONG).show()
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(intent)

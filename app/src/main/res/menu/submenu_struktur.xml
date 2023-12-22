@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/submenu1"
+        android:title="Kelola Jabatan" />
+    <item
+        android:id="@+id/submenu2"
+        android:title="Kelola Pegawai" />
+</menu>

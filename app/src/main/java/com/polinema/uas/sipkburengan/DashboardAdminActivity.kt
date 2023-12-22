@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentTransaction
@@ -17,7 +18,8 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
 
     private lateinit var b : ActivityDashboardAdminBinding
     lateinit var fragInformasi : InformasiAdminActivity
-    lateinit var fragStruktur : StrukturAdminActivity
+    lateinit var fragJabatan : KelolaJabatanActivity
+    lateinit var fragPegawai : KelolaPegawaiActivity
     lateinit var fragLayanan : LayananAdminActivity
     lateinit var ft : FragmentTransaction
     lateinit var dialog : AlertDialog.Builder
@@ -31,7 +33,8 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
 
         b.bottomNavigation.setOnItemSelectedListener(this)
         fragInformasi = InformasiAdminActivity()
-        fragStruktur = StrukturAdminActivity()
+        fragJabatan = KelolaJabatanActivity()
+        fragPegawai = KelolaPegawaiActivity()
         fragLayanan = LayananAdminActivity()
     }
 
@@ -71,12 +74,33 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
                 b.frameLayout.visibility = View.VISIBLE
             }
             R.id.menuStruktur -> {
-                ft = supportFragmentManager.beginTransaction()
-                ft.replace(R.id.frameLayout, fragStruktur).commit()
-                b.frameLayout.setBackgroundColor(
-                    Color.argb(245,225,255,255)
-                )
-                b.frameLayout.visibility = View.VISIBLE
+                val popupMenu = PopupMenu(this, findViewById(R.id.menuStruktur))
+                popupMenu.menuInflater.inflate(R.menu.submenu_struktur, popupMenu.menu)
+                popupMenu.setOnMenuItemClickListener { subItem ->
+                    when (subItem.itemId) {
+                        R.id.submenu1 -> {
+                            ft = supportFragmentManager.beginTransaction()
+                            ft.replace(R.id.frameLayout, fragJabatan).commit()
+                            b.frameLayout.setBackgroundColor(
+                                Color.argb(245,225,255,255)
+                            )
+                            b.frameLayout.visibility = View.VISIBLE
+                            true
+                        }
+                        R.id.submenu2 -> {
+                            ft = supportFragmentManager.beginTransaction()
+                            ft.replace(R.id.frameLayout, fragPegawai).commit()
+                            b.frameLayout.setBackgroundColor(
+                                Color.argb(245,225,255,255)
+                            )
+                            b.frameLayout.visibility = View.VISIBLE
+                            true
+                        }
+                        else -> false
+                    }
+                }
+
+                popupMenu.show()
             }
             R.id.menuLayanan -> {
                 ft = supportFragmentManager.beginTransaction()
