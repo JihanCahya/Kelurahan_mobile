@@ -61,6 +61,7 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="#3F51B5"
         android:text="Tambah"
+        app:icon="@drawable/baseline_control_point_duplicate_24"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout14"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout14" />
 
@@ -70,6 +71,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#4CAF50"
         android:text="Edit"
+        app:icon="@drawable/baseline_edit_24"
         app:layout_constraintEnd_toStartOf="@+id/btnHapusJabatan"
         app:layout_constraintStart_toEndOf="@+id/btnTambahJabatan"
         app:layout_constraintTop_toTopOf="@+id/btnTambahJabatan" />
@@ -80,6 +82,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#FF5722"
         android:text="Hapus"
+        app:icon="@drawable/baseline_delete_24"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout14"
         app:layout_constraintTop_toTopOf="@+id/btnTambahJabatan" />
 
@@ -90,6 +93,7 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="#FF9800"
         android:text="Kosongkan Form"
+        app:icon="@drawable/baseline_playlist_remove_24"
         app:layout_constraintEnd_toEndOf="@+id/btnHapusJabatan"
         app:layout_constraintStart_toStartOf="@+id/btnTambahJabatan"
         app:layout_constraintTop_toBottomOf="@+id/btnEditJabatan" />

@@ -13,85 +13,86 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.polinema.uas.sipkburengan.databinding.ActivityEditInformasiBinding
+import com.polinema.uas.sipkburengan.databinding.ActivityEditPegawaiBinding
 
-class EditInformasiActivity : AppCompatActivity(), View.OnClickListener {
-    
-    private lateinit var b : ActivityEditInformasiBinding
+class EditPegawaiActivity : AppCompatActivity(), View.OnClickListener {
+
+    private lateinit var b : ActivityEditPegawaiBinding
     private lateinit var db: DatabaseReference
     private lateinit var storage: StorageReference
-    private lateinit var informasiId: String
+    private lateinit var pegawaiId: String
     private var imageUri: Uri? = null
     private val PICK_IMAGE_REQUEST = 2
+    val arrayPegawai = arrayOf("Kepala Desa", "Sekretaris", "Bendahara")
     lateinit var adapterSpin : ArrayAdapter<String>
-    val arrayInformasi = arrayOf("Berita kelurahan", "Informasi bantuan")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        b = ActivityEditInformasiBinding.inflate(layoutInflater)
+        b = ActivityEditPegawaiBinding.inflate(layoutInflater)
         setContentView(b.root)
 
-        db = FirebaseDatabase.getInstance().getReference("informasi")
+        db = FirebaseDatabase.getInstance().getReference("pegawai")
         storage = FirebaseStorage.getInstance().reference
 
-        informasiId = intent.getStringExtra("ID_INFORMASI") ?: ""
+        pegawaiId = intent.getStringExtra("ID_PEGAWAI") ?: ""
 
-        loadInformasiData()
+        loadPegawaiData()
 
-        adapterSpin = ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayInformasi)
-        b.spJenis1.adapter = adapterSpin
+        adapterSpin = ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayPegawai)
+        b.spJabatan1.adapter = adapterSpin
 
-        b.btnKembaliInformasi1.setOnClickListener(this)
-        b.btnFotoInformasi1.setOnClickListener(this)
-        b.btnSimpanInformasi1.setOnClickListener(this)
+        b.btnKembaliPegawai1.setOnClickListener(this)
+        b.btnFotoPegawai1.setOnClickListener(this)
+        b.btnSimpanPegawai1.setOnClickListener(this)
     }
 
     private fun isFormValid(): Boolean {
         return (
-                !b.edJudulInformasi1.text.toString().isEmpty() &&
-                !b.edDeskripsiInformasi1.text.toString().isEmpty()
+                !b.edNamaPegawai1.text.toString().isEmpty() &&
+                !b.edNipPegawai1.text.toString().isEmpty() &&
+                !b.edAlamatPegawai1.text.toString().isEmpty()
                 )
     }
 
     override fun onClick(v: View?) {
         when(v?.id){
-            R.id.btnFotoInformasi1 -> {
+            R.id.btnFotoPegawai1 -> {
                 val intent = Intent(Intent.ACTION_PICK)
                 intent.type = "image/*"
                 startActivityForResult(intent, PICK_IMAGE_REQUEST)
             }
-            R.id.btnSimpanInformasi1 -> {
+            R.id.btnSimpanPegawai1 -> {
                 if (isFormValid()){
-                    b.progressBar6.visibility = View.VISIBLE
-                    val id = b.edIdInformasi1.text.toString()
-                    val judul = b.edJudulInformasi1.text.toString()
-                    val jenis = adapterSpin.getItem(b.spJenis1.selectedItemPosition)!!
-                    val deskripsi = b.edDeskripsiInformasi1.text.toString()
-                    val tanggal = b.edTanggalInformasi1.text.toString()
-                    val image = b.edImageUrl1.text.toString()
+                    b.progressBar4.visibility = View.VISIBLE
+                    val id = b.edIdPegawai1.text.toString()
+                    val nama = b.edNamaPegawai1.text.toString()
+                    val nip = b.edNipPegawai1.text.toString()
+                    val jabatan = adapterSpin.getItem(b.spJabatan1.selectedItemPosition)!!
+                    val alamat = b.edAlamatPegawai1.text.toString()
+                    val image = b.edImagePegawai1.text.toString()
 
-                    val informasi = Informasi(id, judul, jenis, tanggal, deskripsi, image)
+                    val pegawai = Pegawai(id, nama, nip, jabatan, alamat, image)
 
                     if (imageUri != null) {
-                        val imageRef = storage.child("informasi/$id.jpg")
+                        val imageRef = storage.child("pegawai/$id.jpg")
                         val uploadTask = imageRef.putFile(imageUri!!)
 
                         uploadTask.addOnSuccessListener { _ ->
                             imageRef.downloadUrl.addOnSuccessListener { uri ->
-                                informasi.imageUrl = uri.toString()
-                                saveUpdatedPetugas(informasi)
+                                pegawai.imageUrl = uri.toString()
+                                saveUpdatedPegawai(pegawai)
                             }
                         }.addOnFailureListener { exception ->
                             showErrorDialog("Terjadi kesalahan saat mengunggah gambar: ${exception.message}")
                         }
                     } else {
-                        saveUpdatedPetugas(informasi)
+                        saveUpdatedPegawai(pegawai)
                     }
                 } else {
                     Toast.makeText(this, "Semua form harus diisi !!!", Toast.LENGTH_LONG).show()
                 }
             }
-            R.id.btnKembaliInformasi1 -> {
+            R.id.btnKembaliPegawai1 -> {
                 finish()
             }
         }
@@ -102,37 +103,37 @@ class EditInformasiActivity : AppCompatActivity(), View.OnClickListener {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             imageUri = data.data
-            b.tvFotoInformasi1.text = "Foto telah diunggah"
+            b.tvNamaFotoPegawai1.text = "Foto telah diunggah"
         }
     }
 
-    private fun loadInformasiData() {
-        db.child(informasiId).get().addOnSuccessListener { dataSnapshot ->
+    private fun loadPegawaiData() {
+        db.child(pegawaiId).get().addOnSuccessListener { dataSnapshot ->
             if (dataSnapshot.exists()) {
-                val informasi = dataSnapshot.getValue(Informasi::class.java)
-                informasi?.let {
+                val pegawai = dataSnapshot.getValue(Pegawai::class.java)
+                pegawai?.let {
                     with(b) {
-                        edIdInformasi1.setText(it.id)
-                        edJudulInformasi1.setText(it.judul)
-                        edDeskripsiInformasi1.setText(it.deskripsi)
-                        edTanggalInformasi1.setText(it.tanggal)
-                        edImageUrl1.setText(it.imageUrl)
+                        edIdPegawai1.setText(it.id)
+                        edNamaPegawai1.setText(it.nama)
+                        edNipPegawai1.setText(it.nip)
+                        edAlamatPegawai1.setText(it.alamat)
+                        edImagePegawai1.setText(it.imageUrl)
 
-                        val position = arrayInformasi.indexOf(it.jenis)
-                        b.spJenis1.setSelection(position)
+                        val position = arrayPegawai.indexOf(it.jabatan)
+                        b.spJabatan1.setSelection(position)
                     }
                 }
             }
         }
     }
 
-    private fun saveUpdatedPetugas(informasi: Informasi) {
-        db.child(informasiId).setValue(informasi)
+    private fun saveUpdatedPegawai(pegawai: Pegawai) {
+        db.child(pegawaiId).setValue(pegawai)
         showSuccessDialog()
     }
 
     private fun showSuccessDialog() {
-        b.progressBar6.visibility = View.GONE
+        b.progressBar4.visibility = View.GONE
         AlertDialog.Builder(this).apply {
             setTitle("BERHASIL")
             setMessage("Data informasi berhasil diperbarui !")
@@ -141,7 +142,7 @@ class EditInformasiActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showErrorDialog(errorMessage: String) {
-        b.progressBar6.visibility = View.GONE
+        b.progressBar4.visibility = View.GONE
         AlertDialog.Builder(this).apply {
             setTitle("ERROR")
             setMessage(errorMessage)

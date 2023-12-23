@@ -86,20 +86,10 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout9" />
 
     <Button
-        android:id="@+id/btnFotoInformasi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:backgroundTint="#FF5722"
-        android:text="Pilih foto"
-        app:layout_constraintStart_toStartOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
-    <Button
         android:id="@+id/btnKembaliInformasi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="#8BC34A"
         android:text="Kembali"
         app:layout_constraintStart_toStartOf="@+id/btnFotoInformasi"
@@ -109,7 +99,7 @@
         android:id="@+id/btnTambahInformasi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="10dp"
         android:backgroundTint="#2196F3"
         android:text="Simpan"
         app:layout_constraintStart_toEndOf="@+id/btnKembaliInformasi"
@@ -119,8 +109,30 @@
         android:id="@+id/tvFotoInformasi"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnFotoInformasi"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout9"
-        app:layout_constraintStart_toStartOf="@+id/btnFotoInformasi"
-        app:layout_constraintTop_toBottomOf="@+id/btnFotoInformasi" />
+        app:layout_constraintStart_toEndOf="@+id/btnFotoInformasi" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnFotoInformasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:clickable="true"
+        app:backgroundTint="#FF9800"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        app:srcCompat="@drawable/baseline_drive_folder_upload_24" />
+
+    <ProgressBar
+        android:id="@+id/progressBar5"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

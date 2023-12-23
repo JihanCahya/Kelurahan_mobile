@@ -13,6 +13,12 @@
         android:theme="@style/Theme.SIPKBurengan"
         tools:targetApi="31">
         <activity
+            android:name=".TambahPegawaiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditPegawaiActivity"
+            android:exported="false" />
+        <activity
             android:name=".KelolaPegawaiActivity"
             android:exported="false" />
         <activity

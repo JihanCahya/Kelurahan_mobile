@@ -135,7 +135,7 @@ class InformasiAdapter(context: Context, data: List<Informasi>) :
         val judulTV: TextView = itemView.findViewById(R.id.tvJudulInformasi)
         val jenisTV: TextView = itemView.findViewById(R.id.tvJenisInformasi)
         val tanggalTV: TextView = itemView.findViewById(R.id.tvTanggalInformasi)
-        val imageView: ImageView = itemView.findViewById(R.id.imvInformasi) // ImageView untuk menampilkan gambar
+        val imageView: ImageView = itemView.findViewById(R.id.imvInformasi)
 
         if (informasi != null) {
             idTV.text = "ID: ${informasi.id}"
@@ -144,14 +144,12 @@ class InformasiAdapter(context: Context, data: List<Informasi>) :
             tanggalTV.text = "Tanggal: ${informasi.tanggal}"
         }
 
-        // Menggunakan Glide untuk mengunduh dan menampilkan gambar dari URL
         if (informasi != null && informasi.imageUrl.isNotEmpty()) {
             Glide.with(context)
                 .load(informasi.imageUrl)
                 .into(imageView)
         } else {
-            // Atur gambar default jika URL gambar tidak ada atau kosong
-            imageView.setImageResource(R.drawable.ic_launcher_background) // Ganti dengan gambar default yang sesuai
+            imageView.setImageResource(R.drawable.ic_launcher_background)
         }
 
         return itemView

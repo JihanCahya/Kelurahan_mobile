@@ -60,10 +60,10 @@ class KelolaJabatanActivity : Fragment(), View.OnClickListener {
 
     private fun isFormValid(): Boolean {
         return (
-                !b.edIdJabatan.text.toString().isEmpty() &&
-                !b.edIdJabatan.text.toString().isEmpty()
+                !b.edJabatan.text.toString().isEmpty()
                 )
     }
+
 
     private fun loadJabatanData(id : String) {
         db.child(id).get().addOnSuccessListener { dataSnapshot ->

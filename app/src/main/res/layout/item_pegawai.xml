@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvNamaPegawai"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="10dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toStartOf="@+id/imvPegawai"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imvPegawai"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/tvNipPegawai"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="@+id/tvNamaPegawai"
+        app:layout_constraintStart_toStartOf="@+id/tvNamaPegawai"
+        app:layout_constraintTop_toBottomOf="@+id/tvNamaPegawai" />
+
+    <TextView
+        android:id="@+id/tvJabatanPegawai"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="@+id/tvNipPegawai"
+        app:layout_constraintStart_toStartOf="@+id/tvNipPegawai"
+        app:layout_constraintTop_toBottomOf="@+id/tvNipPegawai" />
+
+    <TextView
+        android:id="@+id/tvAlamatPegawai"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="@+id/tvJabatanPegawai"
+        app:layout_constraintStart_toStartOf="@+id/tvJabatanPegawai"
+        app:layout_constraintTop_toBottomOf="@+id/tvJabatanPegawai" />
+
+    <TextView
+        android:id="@+id/tvIdPegawai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="8dp"
+        android:text="TextView"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/tvNipPegawai"
+        app:layout_constraintEnd_toStartOf="@+id/imvPegawai"
+        app:layout_constraintStart_toEndOf="@+id/tvNipPegawai"
+        app:layout_constraintTop_toBottomOf="@+id/tvNamaPegawai" />
+</androidx.constraintlayout.widget.ConstraintLayout>

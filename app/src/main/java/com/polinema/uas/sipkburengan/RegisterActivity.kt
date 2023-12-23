@@ -74,6 +74,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         when(v!!.id){
             R.id.btnRegister -> {
                 if (isFormValid()) {
+                    b.progressBar2.visibility = View.VISIBLE
                     auth.createUserWithEmailAndPassword(
                         b.edEmail.text.toString(),
                         b.edPasswordR.text.toString()
@@ -103,13 +104,16 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                             val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("Data_user")
 
                             databaseReference.child(currentUser!!.uid).setValue(user).addOnSuccessListener {
+                                b.progressBar2.visibility = View.GONE
                                 Toast.makeText(this, "Berhasil mendaftarkan akun, silahkan cek email anda untuk verifikasi", Toast.LENGTH_LONG).show()
                                 kosongkanData()
                                 finish()
                             }.addOnFailureListener { e ->
+                                b.progressBar2.visibility = View.GONE
                                 Toast.makeText(this, "Gagal menyimpan data ke database. Error: ${e.message}", Toast.LENGTH_LONG).show()
                             }
                         } else {
+                            b.progressBar2.visibility = View.GONE
                             Toast.makeText(this, "Tidak dapat mendaftar, periksa data", Toast.LENGTH_LONG).show()
                         }
                     }
