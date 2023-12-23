@@ -9,8 +9,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.polinema.uas.sipkburengan.databinding.ActivityEditPegawaiBinding
@@ -19,11 +22,12 @@ class EditPegawaiActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var b : ActivityEditPegawaiBinding
     private lateinit var db: DatabaseReference
+    private lateinit var db_jabatan: DatabaseReference
     private lateinit var storage: StorageReference
     private lateinit var pegawaiId: String
     private var imageUri: Uri? = null
     private val PICK_IMAGE_REQUEST = 2
-    val arrayPegawai = arrayOf("Kepala Desa", "Sekretaris", "Bendahara")
+    val arrayPegawai = mutableListOf<String>()
     lateinit var adapterSpin : ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,10 +40,32 @@ class EditPegawaiActivity : AppCompatActivity(), View.OnClickListener {
 
         pegawaiId = intent.getStringExtra("ID_PEGAWAI") ?: ""
 
-        loadPegawaiData()
+        db_jabatan = FirebaseDatabase.getInstance().getReference("jabatan")
+        db_jabatan.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (jabatanSnapshot in dataSnapshot.children) {
+                        val jabatan = jabatanSnapshot.child("jabatan").getValue(String::class.java)
+                        jabatan?.let {
+                            arrayPegawai.add(it)
+                        }
+                    }
+                    adapterSpin = ArrayAdapter(
+                        this@EditPegawaiActivity,
+                        android.R.layout.simple_list_item_1,
+                        arrayPegawai
+                    )
 
-        adapterSpin = ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayPegawai)
-        b.spJabatan1.adapter = adapterSpin
+                    b.spJabatan1.adapter = adapterSpin
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Toast.makeText(this@EditPegawaiActivity, "Failed to fetch data", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        loadPegawaiData()
 
         b.btnKembaliPegawai1.setOnClickListener(this)
         b.btnFotoPegawai1.setOnClickListener(this)

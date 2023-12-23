@@ -8,8 +8,11 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.polinema.uas.sipkburengan.databinding.ActivityTambahPegawaiBinding
@@ -18,10 +21,11 @@ class TambahPegawaiActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var b : ActivityTambahPegawaiBinding
     private lateinit var db: DatabaseReference
+    private lateinit var db_jabatan: DatabaseReference
     private lateinit var storage: StorageReference
     private var imageUri: Uri? = null
     private val PICK_IMAGE_REQUEST = 1
-    val arrayPegawai = arrayOf("Kepala Desa", "Sekretaris", "Bendahara")
+    val arrayPegawai = mutableListOf<String>()
     lateinit var adapterSpin : ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +36,31 @@ class TambahPegawaiActivity : AppCompatActivity(), View.OnClickListener {
         db = FirebaseDatabase.getInstance().getReference("pegawai")
         storage = FirebaseStorage.getInstance().reference
 
-        adapterSpin = ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayPegawai)
-        b.spJabatan.adapter = adapterSpin
+        db_jabatan = FirebaseDatabase.getInstance().getReference("jabatan")
+        db_jabatan.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (jabatanSnapshot in dataSnapshot.children) {
+                        val jabatan = jabatanSnapshot.child("jabatan").getValue(String::class.java)
+                        jabatan?.let {
+                            arrayPegawai.add(it)
+                        }
+                    }
+
+                    adapterSpin = ArrayAdapter(
+                        this@TambahPegawaiActivity,
+                        android.R.layout.simple_list_item_1,
+                        arrayPegawai
+                    )
+
+                    b.spJabatan.adapter = adapterSpin
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Toast.makeText(this@TambahPegawaiActivity, "Failed to fetch data", Toast.LENGTH_SHORT).show()
+            }
+        })
 
         b.btnKembaliPegawai.setOnClickListener(this)
         b.btnFotoPegawai.setOnClickListener(this)
