@@ -69,7 +69,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         val editor = sharedPreferences.edit()
         editor.remove("UID")
         editor.apply()
-
         finish()
     }
 

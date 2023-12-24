@@ -15,7 +15,6 @@ class HistorySuratActivity : Fragment() {
         thisParent = activity as MainActivity
         b = ActivityHistorySuratBinding.inflate(layoutInflater)
         v = b.root
-
         return v
     }
 }

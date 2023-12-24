@@ -15,7 +15,6 @@ class PengajuanSuratActivity : Fragment() {
         thisParent = activity as MainActivity
         b = ActivityPengajuanSuratBinding.inflate(layoutInflater)
         v = b.root
-
         return v
     }
 }

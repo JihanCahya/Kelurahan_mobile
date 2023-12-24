@@ -15,7 +15,6 @@ class ProfilKelurahanActivity : Fragment() {
         thisParent = activity as MainActivity
         b = ActivityProfilKelurahanBinding.inflate(layoutInflater)
         v = b.root
-
         return v
     }
 }

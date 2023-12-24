@@ -16,7 +16,6 @@ class InformasiPenggunaActivity : Fragment() {
         thisParent = activity as MainActivity
         b = ActivityInformasiPenggunaBinding.inflate(layoutInflater)
         v = b.root
-
         return v
     }
 }
