@@ -69,6 +69,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="5dp"
         android:backgroundTint="#FF0000"
+        android:enabled="false"
         android:text="Belum dicek"
         app:layout_constraintBottom_toBottomOf="@+id/textView29"
         app:layout_constraintStart_toEndOf="@+id/textView29"
