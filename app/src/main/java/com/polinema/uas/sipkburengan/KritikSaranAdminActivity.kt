@@ -45,7 +45,7 @@ class KritikSaranAdminActivity : Fragment() {
                 val status = selectedPesan.status
                 if (status == "Belum dicek"){
                     builder.setPositiveButton("Baca") { dialog, _ ->
-                        Toast.makeText(requireContext(), "Tandai sudah dibaca", Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(), "Baca", Toast.LENGTH_LONG).show()
                         dialog.dismiss()
                     }
                     builder.setNegativeButton("Balas") { dialog, _ ->
