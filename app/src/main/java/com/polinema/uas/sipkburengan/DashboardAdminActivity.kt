@@ -21,7 +21,9 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
     lateinit var fragInformasi : InformasiAdminActivity
     lateinit var fragJabatan : KelolaJabatanActivity
     lateinit var fragPegawai : KelolaPegawaiActivity
-    lateinit var fragLayanan : LayananAdminActivity
+    lateinit var fragKritik : KritikSaranAdminActivity
+    lateinit var fragValidasi : ValidasiAdminActivity
+    lateinit var fragHistory : HistoryAdminActivity
     lateinit var ft : FragmentTransaction
     lateinit var dialog : AlertDialog.Builder
 
@@ -36,7 +38,9 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
         fragInformasi = InformasiAdminActivity()
         fragJabatan = KelolaJabatanActivity()
         fragPegawai = KelolaPegawaiActivity()
-        fragLayanan = LayananAdminActivity()
+        fragKritik = KritikSaranAdminActivity()
+        fragValidasi = ValidasiAdminActivity()
+        fragHistory = HistoryAdminActivity()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -103,16 +107,44 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
                         else -> false
                     }
                 }
-
                 popupMenu.show()
             }
             R.id.menuLayanan -> {
-                ft = supportFragmentManager.beginTransaction()
-                ft.replace(R.id.frameLayout, fragLayanan).commit()
-                b.frameLayout.setBackgroundColor(
-                    Color.argb(245,225,255,255)
-                )
-                b.frameLayout.visibility = View.VISIBLE
+                val popupMenu = PopupMenu(this, findViewById(R.id.menuLayanan))
+                popupMenu.menuInflater.inflate(R.menu.submenu_layanan, popupMenu.menu)
+                popupMenu.setOnMenuItemClickListener { subItem ->
+                    when (subItem.itemId) {
+                        R.id.subKritik -> {
+                            ft = supportFragmentManager.beginTransaction()
+                            ft.replace(R.id.frameLayout, fragKritik).commit()
+                            b.frameLayout.setBackgroundColor(
+                                Color.argb(245,225,255,255)
+                            )
+                            b.frameLayout.visibility = View.VISIBLE
+                            true
+                        }
+                        R.id.subValidasi -> {
+                            ft = supportFragmentManager.beginTransaction()
+                            ft.replace(R.id.frameLayout, fragValidasi).commit()
+                            b.frameLayout.setBackgroundColor(
+                                Color.argb(245,225,255,255)
+                            )
+                            b.frameLayout.visibility = View.VISIBLE
+                            true
+                        }
+                        R.id.subHistory -> {
+                            ft = supportFragmentManager.beginTransaction()
+                            ft.replace(R.id.frameLayout, fragHistory).commit()
+                            b.frameLayout.setBackgroundColor(
+                                Color.argb(245,225,255,255)
+                            )
+                            b.frameLayout.visibility = View.VISIBLE
+                            true
+                        }
+                        else -> false
+                    }
+                }
+                popupMenu.show()
             }
             R.id.menuHome -> b.frameLayout.visibility = View.GONE
         }

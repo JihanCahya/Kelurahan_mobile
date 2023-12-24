@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/subKritik"
+        android:title="Kelola Kritik dan Saran" />
+    <item
+        android:id="@+id/subValidasi"
+        android:title="Validasi Surat" />
+    <item
+        android:id="@+id/subHistory"
+        android:title="History Administrasi" />
+</menu>
