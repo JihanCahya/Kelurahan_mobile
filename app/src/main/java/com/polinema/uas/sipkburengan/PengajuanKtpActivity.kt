@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -13,6 +14,7 @@ import com.google.firebase.storage.StorageReference
 import com.polinema.uas.sipkburengan.databinding.ActivityPengajuanKtpBinding
 import java.text.SimpleDateFormat
 import java.util.Date
+
 class PengajuanKtpActivity : AppCompatActivity() {
     lateinit var b: ActivityPengajuanKtpBinding
     private lateinit var databaseReference: DatabaseReference
@@ -23,13 +25,16 @@ class PengajuanKtpActivity : AppCompatActivity() {
     private var imageUriAkta: Uri? = null
     private val PICK_IMAGE_REQUEST = 1
 
+    private val uid: String?
+        get() = FirebaseAuth.getInstance().currentUser?.uid
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         b = ActivityPengajuanKtpBinding.inflate(layoutInflater)
         setContentView(b.root)
 
         // Inisialisasi DatabaseReference ke Firebase Realtime Database
-        databaseReference = FirebaseDatabase.getInstance().getReference("Pengajuan_Ktp")
+        databaseReference = FirebaseDatabase.getInstance().getReference("Pengajuan/Pengajuan_Ktp")
 
         // Inisialisasi StorageReference ke Firebase Storage
         storageReference = FirebaseStorage.getInstance().reference
@@ -39,59 +44,66 @@ class PengajuanKtpActivity : AppCompatActivity() {
         // Tombol untuk memilih gambar Pengantar RT
         val btnPilihGambarRT = b.UpPKtp
         btnPilihGambarRT.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/pengajuan_ktp/*"
-            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+            launchImagePicker(PICK_IMAGE_REQUEST)
         }
 
         // Tombol untuk memilih gambar KTP
         val btnPilihGambarKTP = b.UpKtpKtp
         btnPilihGambarKTP.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/pengajuan_ktp/*"
-            startActivityForResult(intent, PICK_IMAGE_REQUEST + 1) // Change request code
+            launchImagePicker(PICK_IMAGE_REQUEST + 1) // Change request code
         }
 
+        // Tombol untuk memilih gambar KK
         val btnPilihGambarKK = b.UpKkKtp
         btnPilihGambarKK.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/pengajuan_ktp/*"
-            startActivityForResult(intent, PICK_IMAGE_REQUEST + 2) // Change request code
+            launchImagePicker(PICK_IMAGE_REQUEST + 2) // Change request code
         }
 
+        // Tombol untuk memilih gambar Akta
         val btnPilihGambarAkta = b.UpAktaKtp
         btnPilihGambarAkta.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/pengajuan_ktp/*"
-            startActivityForResult(intent, PICK_IMAGE_REQUEST + 3) // Change request code
+            launchImagePicker(PICK_IMAGE_REQUEST + 3) // Change request code
         }
 
         btnSimpan.setOnClickListener {
-            if (imageUriPengantarRT != null && imageUriKTP != null && imageUriKK != null && imageUriAkta != null) {
-                // Generate unique ID for each entry
-                val idPengajuan = databaseReference.push().key
-
-                // Mendapatkan tanggal hari ini
-                val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Date())
-
-                // Upload gambar Pengantar RT
-                uploadImage(idPengajuan!!, "pengantar_rt", imageUriPengantarRT!!, currentDate)
-
-                // Upload gambar KTP
-                uploadImage(idPengajuan, "ktp", imageUriKTP!!, currentDate)
-
-                // Upload gambar kk
-                uploadImage(idPengajuan, "kk", imageUriKK!!, currentDate)
-
-                // Upload gambar akta
-                uploadImage(idPengajuan, "akta", imageUriAkta!!, currentDate)
-
-            } else {
-                // Jika salah satu atau kedua gambar tidak dipilih, tampilkan pesan kesalahan
-                showErrorDialog("Pilih gambar Pengantar terlebih dahulu")
-            }
+            uploadData()
         }
     }
+
+    private fun launchImagePicker(requestCode: Int) {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, requestCode)
+    }
+
+    private fun uploadData() {
+        if (imageUriPengantarRT != null && imageUriKTP != null && imageUriKK != null && imageUriAkta != null) {
+            val idPengajuan = databaseReference.push().key
+            val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Date())
+
+            uploadImage(idPengajuan!!, "pengantar_rt", imageUriPengantarRT!!, currentDate)
+            uploadImage(idPengajuan, "ktp", imageUriKTP!!, currentDate)
+            uploadImage(idPengajuan, "kk", imageUriKK!!, currentDate)
+            uploadImage(idPengajuan, "akta", imageUriAkta!!, currentDate)
+
+            val pengajuan = Pengajuan(
+                idPengajuan,
+                uid ?: "",
+                currentDate,
+                "Belum dicek",
+                "Surat Pengajuan Ktp",
+                imageUrlPengantarRT = imageUriPengantarRT.toString(),
+                imageUrlKTP = imageUriKTP.toString(),
+                imageUrlKK = imageUriKK.toString(),
+                imageUrlAkta = imageUriAkta.toString()
+            )
+
+            showSuccessDialog("Data Pengajuan berhasil diunggah!", idPengajuan)
+        } else {
+            showErrorDialog("Pilih gambar Pengantar RT, KTP, KK, dan Akta terlebih dahulu")
+        }
+    }
+
     private fun uploadImage(idPengajuan: String, imageType: String, imageUri: Uri, currentDate: String) {
         val timestamp = System.currentTimeMillis() // timestamp untuk menyertakan waktu unik
 
@@ -106,13 +118,21 @@ class PengajuanKtpActivity : AppCompatActivity() {
                 val imageUrl = uri.toString()
 
                 // Setelah mendapatkan URL gambar yang benar, simpan data ke Firebase Database
-                val pengajuan = Pengajuan(idPengajuan, imageUrl, currentDate)
-                databaseReference.child(idPengajuan).setValue(pengajuan)
+                val pengajuan = Pengajuan(
+                    idPengajuan,
+                    uid ?: "",
+                    currentDate,
+                    "Belum dicek",
+                    "Surat Pengajuan Ktp",
+                    imageUrlPengantarRT = imageUriPengantarRT.toString(),
+                    imageUrlKTP = imageUriKTP.toString(),
+                    imageUrlKK = imageUriKK.toString(),
+                    imageUrlAkta = imageUriAkta.toString()
+                )
 
-                // Tampilkan pesan sukses
-                showSuccessDialog("Data Pengajuan berhasil diunggah!", idPengajuan)
+                databaseReference.child(idPengajuan).setValue(pengajuan)
             }
-    }.addOnFailureListener { exception ->
+        }.addOnFailureListener { exception ->
             // Penanganan kesalahan jika ada kesalahan saat mengunggah gambar
             showErrorDialog("Terjadi kesalahan saat mengunggah gambar: ${exception.localizedMessage}")
         }.addOnProgressListener { taskSnapshot ->
@@ -124,10 +144,15 @@ class PengajuanKtpActivity : AppCompatActivity() {
 
     data class Pengajuan(
         val id: String = "",
-        val imageUrl: String = "",
-        val tanggalPengajuan: String = ""
+        val id_pengaju: String = "",
+        val tanggalPengajuan: String = "",
+        val status: String = "",
+        val keterangan: String = "",
+        val imageUrlPengantarRT: String = "",
+        val imageUrlKTP: String = "",
+        val imageUrlKK: String = "",
+        val imageUrlAkta: String = ""
     )
-
 
     private fun showSuccessDialog(message: String, idPengajuan: String) {
         val builder = AlertDialog.Builder(this)
@@ -174,11 +199,12 @@ class PengajuanKtpActivity : AppCompatActivity() {
                     imageUriKTP = data.data
                     b.ImvKtpKtp.setImageURI(imageUriKTP)
                 }
+                // KK
                 PICK_IMAGE_REQUEST + 2 -> {
                     imageUriKK = data.data
                     b.ImvKkKtp.setImageURI(imageUriKK)
                 }
-                // KTP
+                // Akta
                 PICK_IMAGE_REQUEST + 3 -> {
                     imageUriAkta = data.data
                     b.ImvAktaKtp.setImageURI(imageUriAkta)
