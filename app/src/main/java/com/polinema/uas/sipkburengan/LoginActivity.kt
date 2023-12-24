@@ -1,5 +1,6 @@
 package com.polinema.uas.sipkburengan
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -102,11 +103,22 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     val akses = dataSnapshot.child("akses").value as String
                     val nama_user = dataSnapshot.child("nama").value as String
                     if (akses == "Admin") {
+                        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putString("UID", currentUser!!.uid)
+                        editor.apply()
+
                         b.progressBar.visibility = View.GONE
                         Toast.makeText(this@LoginActivity, "Selamat Datang $nama_user" , Toast.LENGTH_LONG).show()
                         val intent = Intent(this@LoginActivity, DashboardAdminActivity::class.java)
                         startActivity(intent)
                     } else if(akses == "Masyarakat") {
+                        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                        val editor = sharedPreferences.edit()
+                        editor.putString("UID", currentUser!!.uid)
+                        editor.apply()
+
+
                         b.progressBar.visibility = View.GONE
                         Toast.makeText(this@LoginActivity, "Selamat Datang $nama_user" , Toast.LENGTH_LONG).show()
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)

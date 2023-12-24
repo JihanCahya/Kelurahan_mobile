@@ -1,5 +1,6 @@
 package com.polinema.uas.sipkburengan
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,11 @@ class ValidasiAdminActivity : Fragment() {
         thisParent = activity as DashboardAdminActivity
         b = ActivityValidasiAdminBinding.inflate(layoutInflater)
         v = b.root
+
+        val sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val uid = sharedPreferences.getString("UID", "")
+
+        b.tvCoba.setText(uid)
 
         return v
     }

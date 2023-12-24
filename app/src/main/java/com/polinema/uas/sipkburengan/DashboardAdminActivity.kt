@@ -1,5 +1,6 @@
 package com.polinema.uas.sipkburengan
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
@@ -68,6 +69,12 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
         val intent = Intent(this, LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+
+        val sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.remove("UID")
+        editor.apply()
+
         finish()
     }
 
