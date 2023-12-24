@@ -13,6 +13,18 @@
         android:theme="@style/Theme.SIPKBurengan"
         tools:targetApi="31">
         <activity
+            android:name=".ProfilKelurahanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HistorySuratActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PengajuanSuratActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InformasiPenggunaActivity"
+            android:exported="false" />
+        <activity
             android:name=".BalasPesanActivity"
             android:exported="false" />
         <activity
