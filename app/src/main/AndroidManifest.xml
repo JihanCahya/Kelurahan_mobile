@@ -13,6 +13,9 @@
         android:theme="@style/Theme.SIPKBurengan"
         tools:targetApi="31">
         <activity
+            android:name=".BalasPesanActivity"
+            android:exported="false" />
+        <activity
             android:name=".HistoryAdminActivity"
             android:exported="false" />
         <activity

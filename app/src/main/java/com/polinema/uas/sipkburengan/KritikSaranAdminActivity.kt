@@ -1,6 +1,7 @@
 package com.polinema.uas.sipkburengan
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -38,6 +39,9 @@ class KritikSaranAdminActivity : Fragment() {
 
         b.lvKritikSaran.setOnItemClickListener { parent, view, position, id ->
             val selectedPesan = adapter.getItem(position)
+            val idJabatan = selectedPesan?.id
+            loadPesanData(idJabatan.toString())
+
             if (selectedPesan != null){
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setTitle("Detail Kritik & Saran")
@@ -45,35 +49,36 @@ class KritikSaranAdminActivity : Fragment() {
                 val status = selectedPesan.status
                 if (status == "Belum dicek"){
                     builder.setPositiveButton("Baca") { dialog, _ ->
-                        Toast.makeText(requireContext(), "Baca", Toast.LENGTH_LONG).show()
+                        if (isFormValid()){
+                            val idP = b.edIdPesan.text.toString()
+                            val namaP = b.edNamaPesan.text.toString()
+                            val bidangP = b.edBidangPesan.text.toString()
+                            val pesanP = b.edPesan.text.toString()
+                            val waktuKP = b.edWaktuKirimPesan.text.toString()
+                            val balasP = b.edBalasPesan.text.toString()
+                            val waktuBP = b.edWaktuBalasPesan.text.toString()
+
+                            val pesan = Pesan(idP, namaP, bidangP, pesanP, waktuKP, "Sudah dibaca", balasP, waktuBP)
+                            db.child(idP).setValue(pesan).addOnSuccessListener {
+                                fetchPesanData()
+                                Toast.makeText(requireContext(), "Pesan ditandai sudah dibaca", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                         dialog.dismiss()
                     }
                     builder.setNegativeButton("Balas") { dialog, _ ->
-                        Toast.makeText(requireContext(), "Balas", Toast.LENGTH_LONG).show()
-                        dialog.dismiss()
+                        val intent = Intent(requireContext(), BalasPesanActivity::class.java)
+                        intent.putExtra("ID_PESAN", selectedPesan.id)
+                        startActivity(intent)
                     }
-                    builder.setNeutralButton("Detail") { dialog, _ ->
-                        Toast.makeText(requireContext(), "Detail", Toast.LENGTH_LONG).show()
-                        dialog.dismiss()
-                    }
-                    builder.show()
                 } else if (status == "Sudah dibaca") {
                     builder.setPositiveButton("Balas") { dialog, _ ->
-                        Toast.makeText(requireContext(), "Balas", Toast.LENGTH_LONG).show()
-                        dialog.dismiss()
+                        val intent = Intent(requireContext(), BalasPesanActivity::class.java)
+                        intent.putExtra("ID_PESAN", selectedPesan.id)
+                        startActivity(intent)
                     }
-                    builder.setNegativeButton("Detail") { dialog, _ ->
-                        Toast.makeText(requireContext(), "Detail", Toast.LENGTH_LONG).show()
-                        dialog.dismiss()
-                    }
-                    builder.show()
-                } else if (status == "Sudah dibalas") {
-                    builder.setPositiveButton("Detail") { dialog, _ ->
-                        Toast.makeText(requireContext(), "Detail", Toast.LENGTH_LONG).show()
-                        dialog.dismiss()
-                    }
-                    builder.show()
                 }
+                builder.show()
             }
         }
         return v
@@ -82,6 +87,39 @@ class KritikSaranAdminActivity : Fragment() {
     override fun onStart() {
         super.onStart()
         fetchPesanData()
+    }
+
+    private fun isFormValid(): Boolean {
+        return (
+                !b.edIdPesan.text.toString().isEmpty() &&
+                !b.edNamaPesan.text.toString().isEmpty() &&
+                !b.edBidangPesan.text.toString().isEmpty() &&
+                !b.edPesan.text.toString().isEmpty() &&
+                !b.edStatusPesan.text.toString().isEmpty() &&
+                !b.edWaktuKirimPesan.text.toString().isEmpty() &&
+                !b.edBalasPesan.text.toString().isEmpty() &&
+                !b.edWaktuBalasPesan.text.toString().isEmpty()
+                )
+    }
+
+    private fun loadPesanData(id : String) {
+        db.child(id).get().addOnSuccessListener { dataSnapshot ->
+            if (dataSnapshot.exists()) {
+                val pesan = dataSnapshot.getValue(Pesan::class.java)
+                pesan?.let {
+                    with(b) {
+                        edIdPesan.setText(it.id)
+                        edNamaPesan.setText(it.nama)
+                        edBidangPesan.setText(it.bidang)
+                        edPesan.setText(it.pesan)
+                        edStatusPesan.setText(it.status)
+                        edWaktuKirimPesan.setText(it.waktu_dikirim)
+                        edBalasPesan.setText(it.balasan)
+                        edWaktuBalasPesan.setText(it.waktu_dibalas)
+                    }
+                }
+            }
+        }
     }
 
     private fun fetchPesanData() {
