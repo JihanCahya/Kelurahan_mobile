@@ -13,6 +13,9 @@
         android:theme="@style/Theme.SIPKBurengan"
         tools:targetApi="31">
         <activity
+            android:name=".KritikSaranPenggunaActivity"
+            android:exported="false" />
+        <activity
             android:name=".ProfilKelurahanActivity"
             android:exported="false" />
         <activity

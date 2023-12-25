@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationBarView
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     lateinit var fragPengajuan : PengajuanSuratActivity
     lateinit var fragHistory : HistorySuratActivity
     lateinit var fragProfil : ProfilKelurahanActivity
+    lateinit var fragPesan : KritikSaranPenggunaActivity
     lateinit var ft : FragmentTransaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         fragPengajuan = PengajuanSuratActivity()
         fragHistory = HistorySuratActivity()
         fragProfil = ProfilKelurahanActivity()
+        fragPesan = KritikSaranPenggunaActivity()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -47,7 +50,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item?.itemId){
-            R.id.itemLogout ->{
+            R.id.itemLogout -> {
                 dialog.setTitle("Konfirmasi").setMessage(
                     "Apakah anda yakin ingin keluar?"
                 )
@@ -55,6 +58,9 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     .setPositiveButton("Ya", btnLogout)
                     .setNegativeButton("Tidak", null)
                 dialog.show()
+            }
+            R.id.itemEditProfil -> {
+                Toast.makeText(this, "Menuju form edit profil", Toast.LENGTH_LONG).show()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -81,7 +87,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 ft = supportFragmentManager.beginTransaction()
                 ft.replace(R.id.frameLayout1, fragInformasi).commit()
                 b.frameLayout1.setBackgroundColor(
-                    Color.argb(245,225,255,255)
+                    Color.argb(255, 255, 255, 255)
                 )
                 b.frameLayout1.visibility = View.VISIBLE
                 true
@@ -95,7 +101,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                             ft = supportFragmentManager.beginTransaction()
                             ft.replace(R.id.frameLayout1, fragPengajuan).commit()
                             b.frameLayout1.setBackgroundColor(
-                                Color.argb(245,225,255,255)
+                                Color.argb(255, 255, 255, 255)
                             )
                             b.frameLayout1.visibility = View.VISIBLE
                             true
@@ -104,7 +110,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                             ft = supportFragmentManager.beginTransaction()
                             ft.replace(R.id.frameLayout1, fragHistory).commit()
                             b.frameLayout1.setBackgroundColor(
-                                Color.argb(245,225,255,255)
+                                Color.argb(255, 255, 255, 255)
                             )
                             b.frameLayout1.visibility = View.VISIBLE
                             true
@@ -115,13 +121,32 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 popupMenu.show()
             }
             R.id.itemProfil -> {
-                ft = supportFragmentManager.beginTransaction()
-                ft.replace(R.id.frameLayout1, fragProfil).commit()
-                b.frameLayout1.setBackgroundColor(
-                    Color.argb(245,225,255,255)
-                )
-                b.frameLayout1.visibility = View.VISIBLE
-                true
+                val popupMenu = PopupMenu(this, findViewById(R.id.itemProfil))
+                popupMenu.menuInflater.inflate(R.menu.submenu_profil_kelurahan, popupMenu.menu)
+                popupMenu.setOnMenuItemClickListener { subItem ->
+                    when (subItem.itemId) {
+                        R.id.subProfil -> {
+                            ft = supportFragmentManager.beginTransaction()
+                            ft.replace(R.id.frameLayout1, fragProfil).commit()
+                            b.frameLayout1.setBackgroundColor(
+                                Color.argb(255, 255, 255, 255)
+                            )
+                            b.frameLayout1.visibility = View.VISIBLE
+                            true
+                        }
+                        R.id.subPesan -> {
+                            ft = supportFragmentManager.beginTransaction()
+                            ft.replace(R.id.frameLayout1, fragPesan).commit()
+                            b.frameLayout1.setBackgroundColor(
+                                Color.argb(255, 255, 255, 255)
+                            )
+                            b.frameLayout1.visibility = View.VISIBLE
+                            true
+                        }
+                        else -> false
+                    }
+                }
+                popupMenu.show()
             }
         }
         return true
