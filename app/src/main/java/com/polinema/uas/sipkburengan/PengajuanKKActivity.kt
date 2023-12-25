@@ -3,6 +3,7 @@ package com.polinema.uas.sipkburengan
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -31,7 +32,7 @@ class PengajuanKKActivity : AppCompatActivity() {
         b = ActivityPengajuanKkBinding.inflate(layoutInflater)
         setContentView(b.root)
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Pengajuan/Pengajuan_KK")
+        databaseReference = FirebaseDatabase.getInstance().getReference("Pengajuan")
         storageReference = FirebaseStorage.getInstance().reference
 
         val btnSimpan = b.UpKk
@@ -40,7 +41,14 @@ class PengajuanKKActivity : AppCompatActivity() {
         btnPilihGambarRT.setOnClickListener {
             launchImagePicker(PICK_IMAGE_REQUEST)
         }
-
+        val spinnerAdapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.kk_options,  // R.array.keterangan_options adalah array resource yang perlu Anda tambahkan ke file strings.xml
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            b.spKk.adapter = adapter
+        }
         val btnPilihGambarKTP = b.UpKtpKk
         btnPilihGambarKTP.setOnClickListener {
             launchImagePicker(PICK_IMAGE_REQUEST + 1)
@@ -56,10 +64,11 @@ class PengajuanKKActivity : AppCompatActivity() {
 
                 val pengajuan = Pengajuan(
                     idPengajuan,
-                    uid ?: "", // Menggunakan UID pengguna
+                    uid ?: "",
                     currentDate,
                     "Belum dicek",
                     "Surat Pengajuan KK",
+                    b.spKk.selectedItem.toString(),
                     imageUriPengantarRT.toString(),
                     imageUriKTP.toString()
                 )
@@ -93,7 +102,8 @@ class PengajuanKKActivity : AppCompatActivity() {
         val id_pengaju: String = "",
         val tanggalPengajuan: String = "",
         val status: String = "",
-        val keterangan: String = "",
+        val surat: String = "",
+        val jenisSurat: String = "",
         val imageUrlPengantarRT: String = "",
         val imageUrlKTP: String = ""
     )

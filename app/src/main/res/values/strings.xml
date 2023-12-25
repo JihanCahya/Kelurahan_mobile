@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">SIPK Burengan</string>
+    <string-array name="keterangan_options">
+        <item>Keterangan Menikah</item>
+        <item>Keterangan Pindah</item>
+        <item>Keterangan Cerai</item>
+        <item>Keterangan Kematian</item>
+    </string-array>
+    <string-array name="kk_options">
+        <item>KK Baru</item>
+        <item>KK Hilang</item>
+    </string-array>
+    <string-array name="ktp_options">
+        <item>KTP Baru</item>
+        <item>KTP Hilang</item>
+    </string-array>
 </resources>

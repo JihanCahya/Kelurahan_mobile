@@ -3,6 +3,7 @@ package com.polinema.uas.sipkburengan
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -33,8 +34,17 @@ class PengajuanKtpActivity : AppCompatActivity() {
         b = ActivityPengajuanKtpBinding.inflate(layoutInflater)
         setContentView(b.root)
 
+        val spinnerAdapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.ktp_options,  // R.array.keterangan_options adalah array resource yang perlu Anda tambahkan ke file strings.xml
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            b.spKtp.adapter = adapter
+        }
+
         // Inisialisasi DatabaseReference ke Firebase Realtime Database
-        databaseReference = FirebaseDatabase.getInstance().getReference("Pengajuan/Pengajuan_Ktp")
+        databaseReference = FirebaseDatabase.getInstance().getReference("Pengajuan")
 
         // Inisialisasi StorageReference ke Firebase Storage
         storageReference = FirebaseStorage.getInstance().reference
@@ -92,6 +102,7 @@ class PengajuanKtpActivity : AppCompatActivity() {
                 currentDate,
                 "Belum dicek",
                 "Surat Pengajuan Ktp",
+                b.spKtp.selectedItem.toString(),
                 imageUrlPengantarRT = imageUriPengantarRT.toString(),
                 imageUrlKTP = imageUriKTP.toString(),
                 imageUrlKK = imageUriKK.toString(),
@@ -124,6 +135,7 @@ class PengajuanKtpActivity : AppCompatActivity() {
                     currentDate,
                     "Belum dicek",
                     "Surat Pengajuan Ktp",
+                    b.spKtp.selectedItem.toString(),
                     imageUrlPengantarRT = imageUriPengantarRT.toString(),
                     imageUrlKTP = imageUriKTP.toString(),
                     imageUrlKK = imageUriKK.toString(),
@@ -147,7 +159,8 @@ class PengajuanKtpActivity : AppCompatActivity() {
         val id_pengaju: String = "",
         val tanggalPengajuan: String = "",
         val status: String = "",
-        val keterangan: String = "",
+        val surat: String = "",
+        val jenisSurat: String = "",
         val imageUrlPengantarRT: String = "",
         val imageUrlKTP: String = "",
         val imageUrlKK: String = "",
