@@ -13,11 +13,17 @@ import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationBarView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.polinema.uas.sipkburengan.databinding.ActivityDashboardAdminBinding
 
 class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
 
     private lateinit var b : ActivityDashboardAdminBinding
+    lateinit var db : DatabaseReference
     lateinit var fragInformasi : InformasiAdminActivity
     lateinit var fragJabatan : KelolaJabatanActivity
     lateinit var fragPegawai : KelolaPegawaiActivity
@@ -26,6 +32,7 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
     lateinit var fragHistory : HistoryAdminActivity
     lateinit var ft : FragmentTransaction
     lateinit var dialog : AlertDialog.Builder
+    lateinit var totalCount : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +40,13 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
         setContentView(b.root)
 
         dialog = AlertDialog.Builder(this)
+        db = FirebaseDatabase.getInstance().getReference("Pengajuan")
+
+        totalCount = "tes"
+        get_count("Belum dicek")
+        get_count("Tidak terpenuhi")
+        get_count("Terpenuhi")
+        get_count("Sudah diambil")
 
         b.bottomNavigation.setOnItemSelectedListener(this)
         fragInformasi = InformasiAdminActivity()
@@ -41,6 +55,28 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
         fragKritik = KritikSaranAdminActivity()
         fragValidasi = ValidasiAdminActivity()
         fragHistory = HistoryAdminActivity()
+    }
+
+    private fun get_count(status:String) {
+        db.orderByChild("status").equalTo(status)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    totalCount = dataSnapshot.childrenCount.toString()
+                    if(status == "Belum dicek"){
+                        b.edJumlahSuratBC.setText(totalCount)
+                    } else if (status == "Tidak terpenuhi"){
+                        b.edJumlahSuratTTV.setText(totalCount)
+                    } else if (status == "Terpenuhi"){
+                        b.edSuratTV.setText(totalCount)
+                    } else if (status == "Sudah diambil"){
+                        b.edSuratSD.setText(totalCount)
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+
+                }
+            })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -87,7 +123,7 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
                 ft = supportFragmentManager.beginTransaction()
                 ft.replace(R.id.frameLayout, fragInformasi).commit()
                 b.frameLayout.setBackgroundColor(
-                    Color.argb(245,225,255,255)
+                    Color.argb(255,255,255,255)
                 )
                 b.frameLayout.visibility = View.VISIBLE
             }
@@ -100,7 +136,7 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
                             ft = supportFragmentManager.beginTransaction()
                             ft.replace(R.id.frameLayout, fragJabatan).commit()
                             b.frameLayout.setBackgroundColor(
-                                Color.argb(245,225,255,255)
+                                Color.argb(255,255,255,255)
                             )
                             b.frameLayout.visibility = View.VISIBLE
                             true
@@ -109,7 +145,7 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
                             ft = supportFragmentManager.beginTransaction()
                             ft.replace(R.id.frameLayout, fragPegawai).commit()
                             b.frameLayout.setBackgroundColor(
-                                Color.argb(245,225,255,255)
+                                Color.argb(255,255,255,255)
                             )
                             b.frameLayout.visibility = View.VISIBLE
                             true
@@ -128,7 +164,7 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
                             ft = supportFragmentManager.beginTransaction()
                             ft.replace(R.id.frameLayout, fragKritik).commit()
                             b.frameLayout.setBackgroundColor(
-                                Color.argb(245,225,255,255)
+                                Color.argb(255,255,255,255)
                             )
                             b.frameLayout.visibility = View.VISIBLE
                             true
@@ -137,7 +173,7 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
                             ft = supportFragmentManager.beginTransaction()
                             ft.replace(R.id.frameLayout, fragValidasi).commit()
                             b.frameLayout.setBackgroundColor(
-                                Color.argb(245,225,255,255)
+                                Color.argb(255,255,255,255)
                             )
                             b.frameLayout.visibility = View.VISIBLE
                             true
@@ -146,7 +182,7 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
                             ft = supportFragmentManager.beginTransaction()
                             ft.replace(R.id.frameLayout, fragHistory).commit()
                             b.frameLayout.setBackgroundColor(
-                                Color.argb(245,225,255,255)
+                                Color.argb(255,255,255,255)
                             )
                             b.frameLayout.visibility = View.VISIBLE
                             true
