@@ -2,7 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/subProfil"
-        android:title="Profil Kelurahan" />
+        android:title="Sejarah Kelurahan" />
+    <item
+        android:id="@+id/subVM"
+        android:title="Visi dan Misi" />
     <item
         android:id="@+id/subPesan"
         android:title="Kritik dan Saran" />

@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     lateinit var fragInformasi : InformasiPenggunaActivity
     lateinit var fragPengajuan : PengajuanSuratActivity
     lateinit var fragHistory : HistorySuratActivity
-    lateinit var fragProfil : ProfilKelurahanActivity
+    lateinit var fragSejarah : ProfilKelurahanActivity
+    lateinit var fragVisiMisi : VisiMisiKelurahanActivity
     lateinit var fragPesan : KritikSaranPenggunaActivity
     lateinit var ft : FragmentTransaction
 
@@ -38,8 +39,9 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         fragInformasi = InformasiPenggunaActivity()
         fragPengajuan = PengajuanSuratActivity()
         fragHistory = HistorySuratActivity()
-        fragProfil = ProfilKelurahanActivity()
+        fragSejarah = ProfilKelurahanActivity()
         fragPesan = KritikSaranPenggunaActivity()
+        fragVisiMisi = VisiMisiKelurahanActivity()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -128,7 +130,16 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     when (subItem.itemId) {
                         R.id.subProfil -> {
                             ft = supportFragmentManager.beginTransaction()
-                            ft.replace(R.id.frameLayout1, fragProfil).commit()
+                            ft.replace(R.id.frameLayout1, fragSejarah).commit()
+                            b.frameLayout1.setBackgroundColor(
+                                Color.argb(255, 255, 255, 255)
+                            )
+                            b.frameLayout1.visibility = View.VISIBLE
+                            true
+                        }
+                        R.id.subProfil -> {
+                            ft = supportFragmentManager.beginTransaction()
+                            ft.replace(R.id.frameLayout1, fragVisiMisi).commit()
                             b.frameLayout1.setBackgroundColor(
                                 Color.argb(255, 255, 255, 255)
                             )

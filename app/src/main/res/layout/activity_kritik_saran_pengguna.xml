@@ -91,7 +91,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout30" />
 
         <ListView
-            android:id="@+id/lsKritik"
+            android:id="@+id/lvKritik"
             android:layout_width="0dp"
             android:layout_height="158dp"
             android:layout_marginStart="16dp"
