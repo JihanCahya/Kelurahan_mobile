@@ -5,4 +5,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PengajuanSuratActivity">
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Pilih surat yang ingin diajukan"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnSuratKK"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="#3F51B5"
+        android:text="Surat Pengajuan kk"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+    <Button
+        android:id="@+id/btnSuratKTP"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#2196F3"
+        android:text="SURAT PENGAJUAN KTP"
+        app:layout_constraintEnd_toEndOf="@+id/btnSuratKK"
+        app:layout_constraintStart_toStartOf="@+id/btnSuratKK"
+        app:layout_constraintTop_toBottomOf="@+id/btnSuratKK" />
+
+    <Button
+        android:id="@+id/btnSuratKeterangan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#00BCD4"
+        android:text="SURAT KETERANGAN"
+        app:layout_constraintEnd_toEndOf="@+id/btnSuratKTP"
+        app:layout_constraintStart_toStartOf="@+id/btnSuratKTP"
+        app:layout_constraintTop_toBottomOf="@+id/btnSuratKTP" />
 </androidx.constraintlayout.widget.ConstraintLayout>
