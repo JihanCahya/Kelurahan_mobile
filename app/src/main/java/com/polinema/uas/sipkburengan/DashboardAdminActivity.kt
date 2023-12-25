@@ -60,6 +60,10 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
                     .setNegativeButton("Tidak", null)
                 dialog.show()
             }
+            R.id.itemEditProfil -> {
+                val intent = Intent(this, EditProfilPenggunaActivity::class.java)
+                startActivity(intent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

@@ -60,7 +60,8 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 dialog.show()
             }
             R.id.itemEditProfil -> {
-                Toast.makeText(this, "Menuju form edit profil", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, EditProfilPenggunaActivity::class.java)
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)
