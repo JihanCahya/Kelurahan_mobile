@@ -44,25 +44,29 @@ class HistorySuratActivity : Fragment() {
             if (selectedSurat != null){
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setTitle("Detail Surat")
-                builder.setMessage("Nama : ${selectedSurat.nama_pengaju}\nSurat : ${selectedSurat.surat}\nJenis Surat : ${selectedSurat.jenisSurat}\nTanggal Pengajuan : ${selectedSurat.tanggalPengajuan}\nStatus : ${selectedSurat.status}")
+                if (selectedSurat.status != "Belum dicek"){
+                    builder.setMessage("Nama : ${selectedSurat.nama_pengaju}\nSurat : ${selectedSurat.surat}\nJenis Surat : ${selectedSurat.jenisSurat}\nTanggal Pengajuan : ${selectedSurat.tanggalPengajuan}\nStatus : ${selectedSurat.status}\nKeterangan : ${selectedSurat.keterangan}")
+                }else {
+                    builder.setMessage("Nama : ${selectedSurat.nama_pengaju}\nSurat : ${selectedSurat.surat}\nJenis Surat : ${selectedSurat.jenisSurat}\nTanggal Pengajuan : ${selectedSurat.tanggalPengajuan}\nStatus : ${selectedSurat.status}")
+                }
                 val status = selectedSurat.status
                 val nama_surat = selectedSurat.surat
                 if (status == "Belum terpenuhi"){
                     if(nama_surat == "Surat Keterangan") {
                         builder.setPositiveButton("Edit") { dialog, _ ->
-                            val intent = Intent(requireContext(), PengajuanKeteranganActivity::class.java)
+                            val intent = Intent(requireContext(), EditSuratKeteranganActivity::class.java)
                             intent.putExtra("ID_SURAT", selectedSurat.id)
                             startActivity(intent)
                         }
                     } else if(nama_surat == "Surat Pengajuan KK") {
                         builder.setPositiveButton("Edit") { dialog, _ ->
-                            val intent = Intent(requireContext(), EditSuratActivity::class.java)
+                            val intent = Intent(requireContext(), EditSuratKeteranganActivity::class.java)
                             intent.putExtra("ID_SURAT", selectedSurat.id)
                             startActivity(intent)
                         }
                     } else if(nama_surat == "Surat Pengajuan KTP") {
                         builder.setPositiveButton("Edit") { dialog, _ ->
-                            val intent = Intent(requireContext(), EditSuratActivity::class.java)
+                            val intent = Intent(requireContext(), EditSuratKeteranganActivity::class.java)
                             intent.putExtra("ID_SURAT", selectedSurat.id)
                             startActivity(intent)
                         }
