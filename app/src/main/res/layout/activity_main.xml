@@ -236,7 +236,6 @@
                 android:layout_height="100dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:src=""
                 tools:srcCompat="@tools:sample/avatars" />
 
         </LinearLayout>
