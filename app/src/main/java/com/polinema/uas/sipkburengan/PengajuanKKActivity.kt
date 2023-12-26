@@ -82,7 +82,6 @@ class PengajuanKKActivity : AppCompatActivity() {
 
                     val pengajuan = Pengajuan(
                         idPengajuan,
-                        uid ?: "",
                         userName,
                         currentDate,
                         "Belum dicek",
@@ -145,7 +144,6 @@ class PengajuanKKActivity : AppCompatActivity() {
 
     data class Pengajuan(
         val id: String = "",
-        val id_pengaju: String = "",
         val nama_pengaju: String = "",
         val tanggalPengajuan: String = "",
         val status: String = "",
