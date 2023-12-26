@@ -42,7 +42,7 @@ class HistoryAdminActivity : Fragment() {
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setTitle("Detail Surat")
                 builder.setMessage("Nama : ${selectedSurat.nama_pengaju}\nSurat : ${selectedSurat.surat}\nJenis Surat : ${selectedSurat.jenisSurat}\nTanggal Pengajuan : ${selectedSurat.tanggalPengajuan}\nTanggal Selesai : ${selectedSurat.tanggalSelesai}")
-                builder.setPositiveButton("Lihat surat") { dialog, _ ->
+                builder.setPositiveButton("Lihat arsip surat") { dialog, _ ->
                     val intent = Intent(requireContext(), DetailHistoryAdmin::class.java)
                     intent.putExtra("ID_SURAT", selectedSurat.id)
                     startActivity(intent)
