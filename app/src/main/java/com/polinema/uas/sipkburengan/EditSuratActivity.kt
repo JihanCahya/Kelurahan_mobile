@@ -6,6 +6,6 @@ import android.os.Bundle
 class EditSuratActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_surat)
+        setContentView(R.layout.activity_edit_keterangan)
     }
 }
