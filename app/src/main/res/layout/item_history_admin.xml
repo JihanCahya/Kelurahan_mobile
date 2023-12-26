@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/tvNama"
+        android:id="@+id/tvNamaHistory"
         android:layout_width="368dp"
         android:layout_height="25dp"
         android:layout_marginTop="16dp"
@@ -23,9 +23,9 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="@+id/tvNama"
-        app:layout_constraintStart_toStartOf="@+id/tvNama"
-        app:layout_constraintTop_toBottomOf="@+id/tvNama" />
+        app:layout_constraintEnd_toEndOf="@+id/tvNamaHistory"
+        app:layout_constraintStart_toStartOf="@+id/tvNamaHistory"
+        app:layout_constraintTop_toBottomOf="@+id/tvNamaHistory" />
 
     <TextView
         android:id="@+id/tvTglPengajuanAdmin"

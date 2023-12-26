@@ -34,10 +34,10 @@
 
             <ImageView
                 android:id="@+id/imageView8"
-                android:layout_width="61dp"
-                android:layout_height="43dp"
+                android:layout_width="90dp"
+                android:layout_height="85dp"
                 android:layout_marginStart="0dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
                 app:srcCompat="@drawable/baseline_account_circle_24" />
 
@@ -75,7 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/imvBeritaHome"
             android:layout_width="80dp"
             android:layout_height="80dp"
             app:srcCompat="@drawable/mobile" />
@@ -95,7 +95,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/imvLayananHome"
             android:layout_width="80dp"
             android:layout_height="80dp"
             app:srcCompat="@drawable/gst" />
@@ -115,7 +115,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
         <ImageView
-            android:id="@+id/imageView11"
+            android:id="@+id/imvKritikHome"
             android:layout_width="80dp"
             android:layout_height="80dp"
             app:srcCompat="@drawable/building" />
@@ -127,7 +127,7 @@
         android:layout_height="41dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/montserrat"
-        android:text="Informasi Publik"
+        android:text="Berita Kelurahan"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="15sp"
@@ -155,7 +155,7 @@
         android:layout_height="43dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/montserrat"
-        android:text="Berita Kelurahan"
+        android:text="Kritik dan Saran"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="15sp"
@@ -187,6 +187,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView59"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@drawable/struktur" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

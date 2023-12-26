@@ -88,7 +88,7 @@ class ValidasiAdminActivity : Fragment() {
                 val validasiData = ArrayList<Validasi>()
                 for (childSnapshot in dataSnapshot.children) {
                     val validasi = childSnapshot.getValue(Validasi::class.java)
-                    if (validasi != null) {
+                    if (validasi != null && validasi.status != "Arsip") {
                         validasiData.add(validasi)
                     }
                 }
@@ -139,35 +139,26 @@ class ValidasiAdapter(context: Context, data: List<Validasi>) :
         val status: Button = itemView.findViewById(R.id.btnStatusValidasi)
 
         if (validasi != null) {
-            if(validasi.status == "Arsip"){
-                namaTV.visibility = View.GONE
-                suratTV.visibility = View.GONE
-                jenisSuratTV.visibility = View.GONE
-                tanggalTV.visibility = View.GONE
-                KeteranganStatus.visibility = View.GONE
-                status.visibility = View.GONE
-            } else {
-                namaTV.text = "Nama : ${validasi.nama_pengaju}"
-                suratTV.text = "Surat : ${validasi.surat}"
-                jenisSuratTV.text = "Jenis : ${validasi.jenisSurat}"
-                tanggalTV.text = "Tanggal diajukan : ${validasi.tanggalPengajuan}"
-                status.text = "${validasi.status}"
-                if (validasi.status == "Belum dicek") {
-                    status.setBackgroundColor(Color.RED)
-                    status.setTextColor(Color.WHITE)
-                } else if (validasi.status == "Belum terpenuhi") {
-                    status.setBackgroundColor(Color.YELLOW)
-                    status.setTextColor(Color.BLACK)
-                } else if (validasi.status == "Sudah diperbarui") {
-                    status.setBackgroundColor(Color.BLACK)
-                    status.setTextColor(Color.WHITE)
-                } else if (validasi.status == "Terpenuhi") {
-                    status.setBackgroundColor(Color.GREEN)
-                    status.setTextColor(Color.BLACK)
-                } else if (validasi.status == "Sudah diambil") {
-                    status.setBackgroundColor(Color.BLUE)
-                    status.setTextColor(Color.WHITE)
-                }
+            namaTV.text = "Nama : ${validasi.nama_pengaju}"
+            suratTV.text = "Surat : ${validasi.surat}"
+            jenisSuratTV.text = "Jenis : ${validasi.jenisSurat}"
+            tanggalTV.text = "Tanggal diajukan : ${validasi.tanggalPengajuan}"
+            status.text = "${validasi.status}"
+            if (validasi.status == "Belum dicek") {
+                status.setBackgroundColor(Color.RED)
+                status.setTextColor(Color.WHITE)
+            } else if (validasi.status == "Belum terpenuhi") {
+                status.setBackgroundColor(Color.YELLOW)
+                status.setTextColor(Color.BLACK)
+            } else if (validasi.status == "Sudah diperbarui") {
+                status.setBackgroundColor(Color.BLACK)
+                status.setTextColor(Color.WHITE)
+            } else if (validasi.status == "Terpenuhi") {
+                status.setBackgroundColor(Color.GREEN)
+                status.setTextColor(Color.BLACK)
+            } else if (validasi.status == "Sudah diambil") {
+                status.setBackgroundColor(Color.BLUE)
+                status.setTextColor(Color.WHITE)
             }
         }
 
