@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     lateinit var dialog : AlertDialog.Builder
     private lateinit var b : ActivityMainBinding
+    lateinit var fragHome : HomePenggunaActivity
     lateinit var fragInformasi : InformasiPenggunaActivity
     lateinit var fragBantuan : BantuanPenggunaActivity
     lateinit var fragPengajuan : PengajuanSuratActivity
@@ -44,6 +45,18 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         fragSejarah = ProfilKelurahanActivity()
         fragPesan = KritikSaranPenggunaActivity()
         fragVisiMisi = VisiMisiKelurahanActivity()
+        fragHome = HomePenggunaActivity()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.frameLayout1, fragHome).commit()
+        b.frameLayout1.setBackgroundColor(
+            Color.argb(255, 255, 255, 255)
+        )
+        b.frameLayout1.visibility = View.VISIBLE
+        true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -86,7 +99,13 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.itemHome -> {
-                b.frameLayout1.visibility = View.GONE
+                ft = supportFragmentManager.beginTransaction()
+                ft.replace(R.id.frameLayout1, fragHome).commit()
+                b.frameLayout1.setBackgroundColor(
+                    Color.argb(255, 255, 255, 255)
+                )
+                b.frameLayout1.visibility = View.VISIBLE
+                true
             }
             R.id.itemInformasi -> {
                 val popupMenu = PopupMenu(this, findViewById(R.id.itemInformasi))

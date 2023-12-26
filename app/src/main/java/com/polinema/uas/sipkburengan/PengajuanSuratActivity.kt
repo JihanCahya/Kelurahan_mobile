@@ -57,8 +57,8 @@ class PengajuanSuratActivity : Fragment(), View.OnClickListener {
             }
             R.id.btnSuratKeterangan -> {
                 val builder = AlertDialog.Builder(requireContext())
-                builder.setTitle("Surat keterangan")
-                builder.setMessage("Persyaratan surat :\n1. Foto copy KK\n2. Foto copy Akta Kelahiran\n3. KIA asli/KTP lama\n4. Surat pengantar RT")
+                builder.setTitle("Surat pengajuan KK")
+                builder.setMessage("Persyaratan surat :\n1. Foto copy KTP\n2. Surat pengantar RT")
                 builder.setPositiveButton("Ajukan") { dialog, _ ->
                     val intent = Intent(requireContext(), PengajuanKeteranganActivity::class.java)
                     startActivity(intent)
