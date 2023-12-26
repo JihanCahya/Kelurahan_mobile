@@ -26,8 +26,6 @@ class DetailSuratKTPActivity : AppCompatActivity(), View.OnClickListener {
         db = FirebaseDatabase.getInstance().getReference("Pengajuan")
         suratId = intent.getStringExtra("ID_SURAT") ?: ""
 
-//        loadDetailKTP()
-
         adapterSpin = ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayStatusKTP)
         b.spStatusKTP.adapter = adapterSpin
 
@@ -47,7 +45,6 @@ class DetailSuratKTPActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
-
         loadDetailKTP()
     }
 

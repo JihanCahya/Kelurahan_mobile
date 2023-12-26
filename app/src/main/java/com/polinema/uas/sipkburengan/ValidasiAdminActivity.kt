@@ -54,7 +54,7 @@ class ValidasiAdminActivity : Fragment() {
                     }
                 } else{
                     builder.setPositiveButton("Detail") { dialog, _ ->
-                        if (selectedSurat.surat == "Surat Pengajuan Ktp") {
+                        if (selectedSurat.surat == "Surat Pengajuan KTP") {
                             val intent = Intent(requireContext(), DetailSuratKTPActivity::class.java)
                             intent.putExtra("ID_SURAT", selectedSurat.id)
                             startActivity(intent)
