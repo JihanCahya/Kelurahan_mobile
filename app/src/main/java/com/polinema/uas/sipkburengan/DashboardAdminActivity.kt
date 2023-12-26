@@ -31,8 +31,7 @@ import com.polinema.uas.sipkburengan.databinding.ActivityDashboardAdminBinding
 class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
 
     private lateinit var b : ActivityDashboardAdminBinding
-    lateinit var db : DatabaseReference
-    private lateinit var db_user: DatabaseReference
+    lateinit var fragHome : HomeAdminActivity
     lateinit var fragInformasi : InformasiAdminActivity
     lateinit var fragJabatan : KelolaJabatanActivity
     lateinit var fragPegawai : KelolaPegawaiActivity
@@ -41,7 +40,6 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
     lateinit var fragHistory : HistoryAdminActivity
     lateinit var ft : FragmentTransaction
     lateinit var dialog : AlertDialog.Builder
-    lateinit var totalCount : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,34 +47,9 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
         setContentView(b.root)
 
         dialog = AlertDialog.Builder(this)
-        db = FirebaseDatabase.getInstance().getReference("Pengajuan")
-
-        db_user = FirebaseDatabase.getInstance().getReference("Data_user")
-        val adapter = DataUserAdapter(this, ArrayList())
-
-        b.lvUserSIPK.adapter = adapter
-
-        b.lvUserSIPK.setOnItemClickListener { parent, view, position, id ->
-
-            val selectedUser = adapter.getItem(position)
-            if (selectedUser != null) {
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle("Detail User")
-                builder.setMessage("Nama : ${selectedUser.nama}\nNIK : ${selectedUser.nik}\nAlamat : ${selectedUser.alamat}\nAkses : ${selectedUser.akses}\nEmail : ${selectedUser.email}\nNo HP : ${selectedUser.no}")
-                builder.setNegativeButton("Edit") { dialog, _ ->
-                    Toast.makeText(this, "edit data user", Toast.LENGTH_SHORT).show()
-                }
-                builder.show()
-            }
-        }
-
-        totalCount = "tes"
-        get_count("Belum dicek")
-        get_count("Tidak terpenuhi")
-        get_count("Terpenuhi")
-        get_count("Sudah diambil")
 
         b.bottomNavigation.setOnItemSelectedListener(this)
+        fragHome = HomeAdminActivity()
         fragInformasi = InformasiAdminActivity()
         fragJabatan = KelolaJabatanActivity()
         fragPegawai = KelolaPegawaiActivity()
@@ -85,52 +58,15 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
         fragHistory = HistoryAdminActivity()
     }
 
-    private fun get_count(status:String) {
-        db.orderByChild("status").equalTo(status)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    totalCount = dataSnapshot.childrenCount.toString()
-                    if(status == "Belum dicek"){
-                        b.edJumlahSuratBC.setText(totalCount)
-                    } else if (status == "Tidak terpenuhi"){
-                        b.edJumlahSuratTTV.setText(totalCount)
-                    } else if (status == "Terpenuhi"){
-                        b.edSuratTV.setText(totalCount)
-                    } else if (status == "Sudah diambil"){
-                        b.edSuratSD.setText(totalCount)
-                    }
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {
-
-                }
-            })
-    }
-
     override fun onStart() {
         super.onStart()
-        fetchUserData()
-    }
-
-    private fun fetchUserData() {
-        val adapter = b.lvUserSIPK.adapter as DataUserAdapter
-        db_user.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val userData = ArrayList<DataUser>()
-                for (childSnapshot in dataSnapshot.children) {
-                    val DataUser = childSnapshot.getValue(DataUser::class.java)
-                    if (DataUser != null) {
-                        userData.add(DataUser)
-                    }
-                }
-                adapter.clear()
-                adapter.addAll(userData)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Toast.makeText(this@DashboardAdminActivity, "Tidak dapat mengambil data", Toast.LENGTH_SHORT).show()
-            }
-        })
+        ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.frameLayout, fragHome).commit()
+        b.frameLayout.setBackgroundColor(
+            Color.argb(255, 255, 255, 255)
+        )
+        b.frameLayout.visibility = View.VISIBLE
+        true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -246,58 +182,16 @@ class DashboardAdminActivity : AppCompatActivity(), NavigationBarView.OnItemSele
                 }
                 popupMenu.show()
             }
-            R.id.menuHome -> b.frameLayout.visibility = View.GONE
+            R.id.menuHome -> {
+                ft = supportFragmentManager.beginTransaction()
+                ft.replace(R.id.frameLayout, fragHome).commit()
+                b.frameLayout.setBackgroundColor(
+                    Color.argb(255, 255, 255, 255)
+                )
+                b.frameLayout.visibility = View.VISIBLE
+                true
+            }
         }
         return true
-    }
-}
-
-data class DataUser(
-    val id: String,
-    val nama: String,
-    val nik: String,
-    val email: String,
-    val no: String,
-    var alamat: String,
-    var akses: String,
-    var password: String,
-    var image: String
-) {
-    constructor() : this("", "", "", "","", "", "", "", "")
-}
-
-// ========================================================
-class DataUserAdapter(context: Context, data: List<DataUser>) :
-    ArrayAdapter<DataUser>(context, R.layout.item_user, data) {
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val itemView = convertView
-            ?: LayoutInflater.from(context).inflate(R.layout.item_user, parent, false)
-
-        val dataUser = getItem(position)
-        val idTV: TextView = itemView.findViewById(R.id.tvIdDataUser)
-        val namaTV: TextView = itemView.findViewById(R.id.tvNamaDataUser)
-        val nikTV: TextView = itemView.findViewById(R.id.tvNikDataUser)
-        val alamatTV: TextView = itemView.findViewById(R.id.tvAlamatDataUser)
-        val aksesTV: TextView = itemView.findViewById(R.id.tvAksesDataUser)
-        val imageView: ImageView = itemView.findViewById(R.id.imvDataUser)
-
-        if (dataUser != null) {
-            idTV.text = "ID : ${dataUser.id}"
-            namaTV.text = "Nama : ${dataUser.nama}"
-            nikTV.text = "NIK : ${dataUser.nik}"
-            alamatTV.text = "Alamat : ${dataUser.alamat}"
-            aksesTV.text = "Akses : ${dataUser.akses}"
-        }
-
-        if (dataUser != null && dataUser.image.isNotEmpty()) {
-            Glide.with(context)
-                .load(dataUser.image)
-                .into(imageView)
-        } else {
-            imageView.setImageResource(R.drawable.ic_launcher_background)
-        }
-
-        return itemView
     }
 }
