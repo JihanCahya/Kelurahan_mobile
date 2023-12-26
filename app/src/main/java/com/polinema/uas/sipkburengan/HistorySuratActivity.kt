@@ -45,6 +45,9 @@ class HistorySuratActivity : Fragment() {
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setTitle("Detail Surat")
                 if (selectedSurat.status != "Belum dicek"){
+                    if (selectedSurat.status == "Terpenuhi") {
+                        builder.setMessage("Nama : ${selectedSurat.nama_pengaju}\nSurat : ${selectedSurat.surat}\nJenis Surat : ${selectedSurat.jenisSurat}\nTanggal Pengajuan : ${selectedSurat.tanggalPengajuan}\nStatus : ${selectedSurat.status}\nKeterangan : ${selectedSurat.keterangan}\nTanggal Selesai : ${selectedSurat.tanggalSelesai}")
+                    }
                     builder.setMessage("Nama : ${selectedSurat.nama_pengaju}\nSurat : ${selectedSurat.surat}\nJenis Surat : ${selectedSurat.jenisSurat}\nTanggal Pengajuan : ${selectedSurat.tanggalPengajuan}\nStatus : ${selectedSurat.status}\nKeterangan : ${selectedSurat.keterangan}")
                 }else {
                     builder.setMessage("Nama : ${selectedSurat.nama_pengaju}\nSurat : ${selectedSurat.surat}\nJenis Surat : ${selectedSurat.jenisSurat}\nTanggal Pengajuan : ${selectedSurat.tanggalPengajuan}\nStatus : ${selectedSurat.status}")
@@ -118,9 +121,10 @@ data class History(
     var imageUrlAkta: String,
     var imageUrlKK: String,
     var imageUrlKTP: String,
-    var imageUrlPengantarRT: String
+    var imageUrlPengantarRT: String,
+    var tanggalSelesai: String
 ) {
-    constructor() : this( "","", "", "","", "", "", "", "","","")
+    constructor() : this( "","", "", "","", "", "", "", "","","","")
 }
 
 // ========================================================
