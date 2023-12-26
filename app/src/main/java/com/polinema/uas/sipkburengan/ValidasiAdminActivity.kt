@@ -106,17 +106,20 @@ class ValidasiAdminActivity : Fragment() {
 // =======================================================
 data class Validasi(
     val id: String,
+    val id_pengaju : String,
     val nama_pengaju: String,
     val surat: String,
     val jenisSurat: String,
     val status: String,
+    val keterangan : String,
     var tanggalPengajuan: String,
+    var tanggalSelesai: String,
     var imageUrlAkta: String,
     var imageUrlKK: String,
     var imageUrlKTP: String,
     var imageUrlPengantarRT: String
 ) {
-    constructor() : this( "","", "", "","", "", "", "", "","")
+    constructor() : this( "","", "","", "","","", "", "", "", "","","")
 }
 
 // ========================================================
