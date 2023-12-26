@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -32,6 +33,10 @@ class HomePenggunaActivity : Fragment(), View.OnClickListener {
         uid = sharedPreferences.getString("UID", "").toString()
 
         loadUser()
+
+        b.imvBeritaHome.setOnClickListener(this)
+        b.imvKritikHome.setOnClickListener(this)
+        b.imvLayananHome.setOnClickListener(this)
 
         return v
     }
@@ -59,18 +64,26 @@ class HomePenggunaActivity : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
+        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
         when(v?.id){
             R.id.imvBeritaHome -> {
-                val intent = Intent(requireContext(), InformasiPenggunaActivity::class.java)
-                startActivity(intent)
+                val informasiFragment = InformasiPenggunaActivity()
+                fragmentTransaction.replace(R.id.frameLayout1, informasiFragment)
+                fragmentTransaction.addToBackStack(null)
+                fragmentTransaction.commit()
             }
             R.id.imvLayananHome -> {
-                val intent = Intent(requireContext(), PengajuanSuratActivity::class.java)
-                startActivity(intent)
+                val layananFragment = PengajuanSuratActivity()
+                fragmentTransaction.replace(R.id.frameLayout1, layananFragment)
+                fragmentTransaction.addToBackStack(null)
+                fragmentTransaction.commit()
             }
             R.id.imvKritikHome -> {
-                val intent = Intent(requireContext(), KritikSaranPenggunaActivity::class.java)
-                startActivity(intent)
+                val kritikFragment = KritikSaranPenggunaActivity()
+                fragmentTransaction.replace(R.id.frameLayout1, kritikFragment)
+                fragmentTransaction.addToBackStack(null)
+                fragmentTransaction.commit()
             }
         }
     }
