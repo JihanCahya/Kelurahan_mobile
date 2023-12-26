@@ -192,7 +192,7 @@ class PengajuanKtpActivity : AppCompatActivity() {
             setTitle("BERHASIL")
             setMessage(message)
             setPositiveButton("Ok") { _, _ ->
-                showToast("Data Pengajuan KK berhasil diunggah!")
+                showToast("Data Pengajuan Ktp berhasil diunggah!")
                 val mainIntent = Intent(this@PengajuanKtpActivity, MainActivity::class.java)
                 startActivity(mainIntent)
                 finish()
