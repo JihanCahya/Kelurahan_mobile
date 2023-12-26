@@ -28,7 +28,6 @@ class ValidasiAdminActivity : Fragment() {
     lateinit var v: View
     private lateinit var db: DatabaseReference
     private lateinit var db_user: DatabaseReference
-    lateinit var nama_pengaju : String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         thisParent = activity as DashboardAdminActivity
@@ -39,8 +38,6 @@ class ValidasiAdminActivity : Fragment() {
         db_user = FirebaseDatabase.getInstance().getReference("Data_user")
         val adapter = ValidasiAdapter(requireContext(), ArrayList())
 
-        nama_pengaju = ""
-
         b.lvValidasi.adapter = adapter
         b.lvValidasi.setOnItemClickListener { parent, view, position, id ->
             val selectedSurat = adapter.getItem(position)
@@ -50,15 +47,26 @@ class ValidasiAdminActivity : Fragment() {
                 builder.setMessage("Nama : ${selectedSurat.id_pengaju}\nSurat : ${selectedSurat.surat}\nJenis Surat : ${selectedSurat.jenisSurat}\nTanggal Pengajuan : ${selectedSurat.tanggalPengajuan}\nStatus : ${selectedSurat.status}")
                 val status = selectedSurat.status
                 if (status == "Sudah diambil"){
-                    builder.setPositiveButton("Detail") { dialog, _ ->
-                        Toast.makeText(requireContext(), "Detail dan ubah status", Toast.LENGTH_SHORT).show()
-                    }
-                    builder.setNegativeButton("Arsipkan surat") { dialog, _ ->
-                        Toast.makeText(requireContext(), "Arsipkan surat", Toast.LENGTH_SHORT).show()
+                    builder.setPositiveButton("Arsipkan surat") { dialog, _ ->
+                        val intent = Intent(requireContext(), ArsipkanSuratActivity::class.java)
+                        intent.putExtra("ID_SURAT", selectedSurat.id)
+                        startActivity(intent)
                     }
                 } else{
                     builder.setPositiveButton("Detail") { dialog, _ ->
-                        Toast.makeText(requireContext(), "Detail dan ubah status", Toast.LENGTH_SHORT).show()
+                        if (selectedSurat.surat == "Surat Pengajuan Ktp") {
+                            val intent = Intent(requireContext(), DetailSuratKTPActivity::class.java)
+                            intent.putExtra("ID_SURAT", selectedSurat.id)
+                            startActivity(intent)
+                        } else if (selectedSurat.surat == "Surat Pengajuan KK") {
+                            val intent = Intent(requireContext(), DetailSuratKKActivity::class.java)
+                            intent.putExtra("ID_SURAT", selectedSurat.id)
+                            startActivity(intent)
+                        } else if (selectedSurat.surat == "Surat Keterangan") {
+                            val intent = Intent(requireContext(), DetailSuratKeteranganActivity::class.java)
+                            intent.putExtra("ID_SURAT", selectedSurat.id)
+                            startActivity(intent)
+                        }
                     }
                 }
                 builder.show()
