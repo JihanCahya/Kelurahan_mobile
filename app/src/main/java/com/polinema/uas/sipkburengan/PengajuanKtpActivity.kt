@@ -118,7 +118,7 @@ class PengajuanKtpActivity : AppCompatActivity() {
                         imageUriAkta.toString()
                     )
                     databaseReference.child(idPengajuan).setValue(pengajuan)
-                    showSuccessDialog("Data Pengajuan KK berhasil diunggah!")
+                    showSuccessDialog("Data Pengajuan Ktp berhasil diunggah!")
                 }
             } else {
                 showErrorDialog("Pilih gambar Pengantar RT dan KTP terlebih dahulu")
@@ -168,7 +168,7 @@ class PengajuanKtpActivity : AppCompatActivity() {
             "pengantar_rt" -> databaseRef.child("imageUrlPengantarRT").setValue(imageUrl)
             "ktp" -> databaseRef.child("imageUrlKTP").setValue(imageUrl)
             "kk" -> databaseRef.child("imageUrlKK").setValue(imageUrl)
-            "akta" -> databaseRef.child("imageUriAkta").setValue(imageUrl)
+            "akta" -> databaseRef.child("imageUrlAkta").setValue(imageUrl)
             // Add more cases for other image types if needed
         }
     }
