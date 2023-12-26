@@ -113,6 +113,7 @@ class HistorySuratActivity : Fragment() {
 // =======================================================
 data class History(
     val id: String,
+    val id_pengaju: String,
     val nama_pengaju: String,
     val surat: String,
     val jenisSurat: String,
@@ -125,8 +126,9 @@ data class History(
     var imageUrlPengantarRT: String,
     var tanggalSelesai: String
 ) {
-    constructor() : this( "","", "", "","", "", "", "", "","","","")
+    constructor() : this("", "","", "", "", "", "", "", "", "", "", "", "")
 }
+
 
 // ========================================================
 class HistoryAdapter(context: Context, data: List<History>) :

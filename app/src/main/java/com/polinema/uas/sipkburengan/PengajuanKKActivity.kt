@@ -53,10 +53,6 @@ class PengajuanKKActivity : AppCompatActivity() {
 
         val btnSimpan = b.UpKk
 
-        val btnPilihGambarRT = b.UpPKk
-        btnPilihGambarRT.setOnClickListener {
-            launchImagePicker(PICK_IMAGE_REQUEST)
-        }
         val spinnerAdapter = ArrayAdapter.createFromResource(
             this,
             R.array.kk_options,  // R.array.keterangan_options adalah array resource yang perlu Anda tambahkan ke file strings.xml
@@ -68,6 +64,11 @@ class PengajuanKKActivity : AppCompatActivity() {
         val btnPilihGambarKTP = b.UpKtpKk
         btnPilihGambarKTP.setOnClickListener {
             launchImagePicker(PICK_IMAGE_REQUEST + 1)
+        }
+
+        val btnPilihGambarRT = b.UpPKk
+        btnPilihGambarRT.setOnClickListener {
+            launchImagePicker(PICK_IMAGE_REQUEST)
         }
 
         btnSimpan.setOnClickListener {
@@ -140,7 +141,6 @@ class PengajuanKKActivity : AppCompatActivity() {
         when (imageType) {
             "pengantar_rt" -> databaseRef.child("imageUrlPengantarRT").setValue(imageUrl)
             "ktp" -> databaseRef.child("imageUrlKTP").setValue(imageUrl)
-            // Add more cases for other image types if needed
         }
     }
 
