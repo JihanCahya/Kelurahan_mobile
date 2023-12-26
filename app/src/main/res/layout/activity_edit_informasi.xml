@@ -186,6 +186,7 @@
         app:backgroundTint="#FF9800"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14"
-        app:srcCompat="@drawable/baseline_drive_folder_upload_24" />
+        app:srcCompat="@drawable/baseline_drive_folder_upload_24"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
