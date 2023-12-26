@@ -7,50 +7,43 @@
     android:background="@drawable/bg"
     tools:context=".InformasiPenggunaActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardBeritaTitle"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView43"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginEnd="10dp"
-        app:cardBackgroundColor="@color/cardview_shadow_end_color"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="70dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Berita Kelurahan"
+        android:textColor="@color/black"
+        android:textSize="40sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView43"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:fontFamily="@font/montserrat"
-            android:text="Berita Kelurahan"
-            android:textColor="@color/white"
-            android:textSize="40sp"
-            android:textStyle="bold" />
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="399dp"
-        android:layout_height="499dp"
-        app:cardBackgroundColor="@color/cardview_shadow_end_color"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
+    <ListView
+        android:id="@+id/lvBerita"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardBeritaTitle">
+        app:layout_constraintTop_toBottomOf="@+id/textView49" />
 
-        <ListView
-            android:id="@+id/lvBerita"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/textView49"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Klik berita untuk melihat berita secara lengkap"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textView43"
+        app:layout_constraintTop_toBottomOf="@+id/textView43" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
