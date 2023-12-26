@@ -94,6 +94,7 @@ class PengajuanKeteranganActivity : AppCompatActivity() {
 
                 val pengajuan = Pengajuan(
                     idPengajuan,
+                    uid ?: "",
                     userName,
                     currentDate,
                     "Belum dicek",
@@ -102,6 +103,7 @@ class PengajuanKeteranganActivity : AppCompatActivity() {
                     "-",
                     imageUriPengantarRT.toString(),
                     imageUriKTP.toString(),
+                    "-",
                     "-",
                     "-"
                 )
@@ -156,6 +158,7 @@ class PengajuanKeteranganActivity : AppCompatActivity() {
 
     data class Pengajuan(
         val id: String = "",
+        val id_pengaju: String = "",
         val nama_pengaju: String = "",
         val tanggalPengajuan: String = "",
         val status: String = "",
@@ -165,7 +168,8 @@ class PengajuanKeteranganActivity : AppCompatActivity() {
         val imageUrlPengantarRT: String = "",
         val imageUrlKTP: String = "",
         val imageUrlKK: String = "",
-        val imageUrlAkta: String = ""
+        val imageUrlAkta: String = "",
+        val tanggalSelesai: String = ""
     )
 
     private fun showSuccessDialog(message: String, idPengajuan: String) {
