@@ -1,6 +1,7 @@
 package com.polinema.uas.sipkburengan
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.polinema.uas.sipkburengan.databinding.ActivityHomePenggunaBinding
 
-class HomePenggunaActivity : Fragment() {
+class HomePenggunaActivity : Fragment(), View.OnClickListener {
 
     private lateinit var b : ActivityHomePenggunaBinding
     lateinit var thisParent: MainActivity
@@ -53,6 +54,23 @@ class HomePenggunaActivity : Fragment() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.imvBeritaHome -> {
+                val intent = Intent(requireContext(), InformasiPenggunaActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.imvLayananHome -> {
+                val intent = Intent(requireContext(), PengajuanSuratActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.imvKritikHome -> {
+                val intent = Intent(requireContext(), KritikSaranPenggunaActivity::class.java)
+                startActivity(intent)
             }
         }
     }

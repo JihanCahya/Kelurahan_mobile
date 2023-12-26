@@ -75,7 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/imvBeritaHome"
             android:layout_width="80dp"
             android:layout_height="80dp"
             app:srcCompat="@drawable/mobile" />
@@ -95,7 +95,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/imvLayananHome"
             android:layout_width="80dp"
             android:layout_height="80dp"
             app:srcCompat="@drawable/gst" />
@@ -115,7 +115,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
         <ImageView
-            android:id="@+id/imageView11"
+            android:id="@+id/imvKritikHome"
             android:layout_width="80dp"
             android:layout_height="80dp"
             app:srcCompat="@drawable/building" />
@@ -127,7 +127,7 @@
         android:layout_height="41dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/montserrat"
-        android:text="Informasi Publik"
+        android:text="Berita Kelurahan"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="15sp"
@@ -155,7 +155,7 @@
         android:layout_height="43dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/montserrat"
-        android:text="Berita Kelurahan"
+        android:text="Kritik dan Saran"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="15sp"
