@@ -1,6 +1,8 @@
 package com.polinema.uas.sipkburengan
 
 import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -120,6 +122,16 @@ class DetailSuratKeteranganActivity : AppCompatActivity(), View.OnClickListener 
                         Glide.with(this@DetailSuratKeteranganActivity)
                             .load(validasi.imageUrlPengantarRT)
                             .into(imPengantar3)
+
+                        b.imFotoKTP2.setOnClickListener {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(imageUrlKTP))
+                            startActivity(intent)
+                        }
+
+                        b.imPengantar3.setOnClickListener {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(imageUrlPengantarRT))
+                            startActivity(intent)
+                        }
 
                         b.edKeteranganPengantar.setText(it.keterangan)
                         val position = arrayStatusKeterangan.indexOf(it.status)
