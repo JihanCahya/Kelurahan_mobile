@@ -144,38 +144,36 @@ class PengajuanKtpActivity : AppCompatActivity() {
         userName: String
     ) {
         val timestamp = System.currentTimeMillis()
-
         val fileName = "$idPengajuan-$imageType-$timestamp.jpg"
 
-        val imageRef = storageReference.child("images/pengajuan_ktp/$fileName")
+        val imageRef = storageReference.child("images/pengajuan_keterangan/$fileName")
         val uploadTask = imageRef.putFile(imageUri)
 
         uploadTask.addOnSuccessListener { taskSnapshot ->
             imageRef.downloadUrl.addOnSuccessListener { uri ->
                 val imageUrl = uri.toString()
-
-                // Use the user name instead of UID in the Pengajuan object
-                val pengajuan = Pengajuan(
-                    idPengajuan,
-                    uid ?: "",
-                    userName,
-                    currentDate,
-                    "Belum dicek",
-                    "Surat Pengajuan Ktp",
-                    b.spKtp.selectedItem.toString(),
-                    imageUrlPengantarRT = imageUriPengantarRT.toString(),
-                    imageUrlKTP = imageUriKTP.toString(),
-                    imageUrlKK = imageUriKK.toString(),
-                    imageUrlAkta = imageUriAkta.toString()
-                )
-
-                databaseReference.child(idPengajuan).setValue(pengajuan)
+                updateDatabase(idPengajuan, imageType, imageUrl, currentDate, userName)
             }
         }.addOnFailureListener { exception ->
             showErrorDialog("Terjadi kesalahan saat mengunggah gambar: ${exception.localizedMessage}")
-        }.addOnProgressListener { taskSnapshot ->
-            // Handle progress events if needed
-            val progress = (100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount).toInt()
+        }
+    }
+
+    private fun updateDatabase(
+        idPengajuan: String,
+        imageType: String,
+        imageUrl: String,
+        currentDate: String,
+        userName: String
+    ) {
+        val databaseRef = databaseReference.child(idPengajuan)
+
+        when (imageType) {
+            "pengantar_rt" -> databaseRef.child("imageUrlPengantarRT").setValue(imageUrl)
+            "ktp" -> databaseRef.child("imageUrlKTP").setValue(imageUrl)
+            "kk" -> databaseRef.child("imageUrlKK").setValue(imageUrl)
+            "akta" -> databaseRef.child("imageUriAkta").setValue(imageUrl)
+            // Add more cases for other image types if needed
         }
     }
 

@@ -114,7 +114,13 @@ class PengajuanKeteranganActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadImage(idPengajuan: String, imageType: String, imageUri: Uri, currentDate: String,userName: String) {
+    private fun uploadImage(
+        idPengajuan: String,
+        imageType: String,
+        imageUri: Uri,
+        currentDate: String,
+        userName: String
+    ) {
         val timestamp = System.currentTimeMillis()
         val fileName = "$idPengajuan-$imageType-$timestamp.jpg"
 
@@ -124,12 +130,29 @@ class PengajuanKeteranganActivity : AppCompatActivity() {
         uploadTask.addOnSuccessListener { taskSnapshot ->
             imageRef.downloadUrl.addOnSuccessListener { uri ->
                 val imageUrl = uri.toString()
-                // No need to update the database here again if it's already updated in uploadData
+                updateDatabase(idPengajuan, imageType, imageUrl, currentDate, userName)
             }
         }.addOnFailureListener { exception ->
             showErrorDialog("Terjadi kesalahan saat mengunggah gambar: ${exception.localizedMessage}")
         }
     }
+
+    private fun updateDatabase(
+        idPengajuan: String,
+        imageType: String,
+        imageUrl: String,
+        currentDate: String,
+        userName: String
+    ) {
+        val databaseRef = databaseReference.child(idPengajuan)
+
+        when (imageType) {
+            "pengantar_rt" -> databaseRef.child("imageUrlPengantarRT").setValue(imageUrl)
+            "ktp" -> databaseRef.child("imageUrlKTP").setValue(imageUrl)
+            // Add more cases for other image types if needed
+        }
+    }
+
 
     data class Pengajuan(
         val id: String = "",
