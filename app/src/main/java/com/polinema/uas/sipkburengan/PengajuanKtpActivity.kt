@@ -106,16 +106,18 @@ class PengajuanKtpActivity : AppCompatActivity() {
 
                     val pengajuan = Pengajuan(
                         idPengajuan,
+                        uid ?: "",
                         userName,
                         currentDate,
                         "Belum dicek",
-                        "Surat Pengajuan KK",
+                        "Surat Pengajuan KTP",
                         b.spKtp.selectedItem.toString(),
                         "-",
                         imageUriPengantarRT.toString(),
                         imageUriKTP.toString(),
                         imageUriKK.toString(),
-                        imageUriAkta.toString()
+                        imageUriAkta.toString(),
+                        "-"
                     )
                     databaseReference.child(idPengajuan).setValue(pengajuan)
                     showSuccessDialog("Data Pengajuan Ktp berhasil diunggah!")
@@ -142,7 +144,7 @@ class PengajuanKtpActivity : AppCompatActivity() {
         val timestamp = System.currentTimeMillis()
         val fileName = "$idPengajuan-$imageType-$timestamp.jpg"
 
-        val imageRef = storageReference.child("images/pengajuan_kk/$fileName")
+        val imageRef = storageReference.child("images/pengajuan_ktp/$fileName")
         val uploadTask = imageRef.putFile(imageUri)
 
         uploadTask.addOnSuccessListener { taskSnapshot ->
@@ -175,6 +177,7 @@ class PengajuanKtpActivity : AppCompatActivity() {
 
     data class Pengajuan(
         val id: String = "",
+        val id_pengaju: String = "",
         val nama_pengaju: String = "",
         val tanggalPengajuan: String = "",
         val status: String = "",
@@ -184,7 +187,8 @@ class PengajuanKtpActivity : AppCompatActivity() {
         val imageUrlPengantarRT: String = "",
         val imageUrlKTP: String = "",
         val imageUrlKK: String = "",
-        val imageUrlAkta: String = ""
+        val imageUrlAkta: String = "",
+        val tanggalSelesai: String = ""
     )
 
     private fun showSuccessDialog(message: String) {
