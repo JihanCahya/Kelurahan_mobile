@@ -58,9 +58,12 @@ class DetailSuratKKActivity : AppCompatActivity(), View.OnClickListener {
                 val status = adapterSpin.getItem(position)
                 if (status == "Belum terpenuhi"){
                     b.textInputLayout32.visibility = View.VISIBLE
+                    b.edKeteranganKK.setText("-")
+                    date = "-"
                 } else if (status == "Belum dicek"){
                     b.textInputLayout32.visibility = View.INVISIBLE
                     b.edKeteranganKK.setText("-")
+                    date = "-"
                 } else if (status == "Terpenuhi"){
                     b.textInputLayout32.visibility = View.INVISIBLE
                     b.edKeteranganKK.setText("Dapat diambil setelah 3x24 jam")
@@ -118,7 +121,6 @@ class DetailSuratKKActivity : AppCompatActivity(), View.OnClickListener {
                             .load(validasi.imageUrlPengantarRT)
                             .into(imPengantar1)
 
-                        b.edKeteranganKK.setText(it.keterangan)
                         val position = arrayStatusKK.indexOf(it.status)
                         b.spStatusKK.setSelection(position)
                     }

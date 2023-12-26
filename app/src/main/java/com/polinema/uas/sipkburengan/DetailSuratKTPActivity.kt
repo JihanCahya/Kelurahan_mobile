@@ -58,9 +58,12 @@ class DetailSuratKTPActivity : AppCompatActivity(), View.OnClickListener {
                 val status = adapterSpin.getItem(position)
                 if (status == "Belum terpenuhi"){
                     b.textInputLayout31.visibility = View.VISIBLE
+                    b.edKeteranganKTP.setText("-")
+                    date = "-"
                 } else if (status == "Belum dicek"){
                     b.textInputLayout31.visibility = View.INVISIBLE
                     b.edKeteranganKTP.setText("-")
+                    date = "-"
                 } else if (status == "Terpenuhi"){
                     b.textInputLayout31.visibility = View.INVISIBLE
                     b.edKeteranganKTP.setText("Dapat diambil setelah 3x24 jam")
