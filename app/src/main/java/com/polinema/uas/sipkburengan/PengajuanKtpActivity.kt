@@ -116,7 +116,8 @@ class PengajuanKtpActivity : AppCompatActivity() {
                         imageUriPengantarRT.toString(),
                         imageUriKTP.toString(),
                         imageUriKK.toString(),
-                        imageUriAkta.toString()
+                        imageUriAkta.toString(),
+                        "-"
                     )
                     databaseReference.child(idPengajuan).setValue(pengajuan)
                     showSuccessDialog("Data Pengajuan Ktp berhasil diunggah!")
