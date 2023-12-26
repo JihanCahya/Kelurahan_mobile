@@ -13,6 +13,9 @@
         android:theme="@style/Theme.SIPKBurengan"
         tools:targetApi="31">
         <activity
+            android:name=".BantuanPenggunaActivity"
+            android:exported="false" />
+        <activity
             android:name=".ArsipkanSuratActivity"
             android:exported="false" />
         <activity
