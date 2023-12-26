@@ -64,13 +64,13 @@ class HistorySuratActivity : Fragment() {
                         }
                     } else if(nama_surat == "Surat Pengajuan KK") {
                         builder.setPositiveButton("Edit") { dialog, _ ->
-                            val intent = Intent(requireContext(), EditSuratKeteranganActivity::class.java)
+                            val intent = Intent(requireContext(), EditSuratKKActivity::class.java)
                             intent.putExtra("ID_SURAT", selectedSurat.id)
                             startActivity(intent)
                         }
                     } else if(nama_surat == "Surat Pengajuan KTP") {
                         builder.setPositiveButton("Edit") { dialog, _ ->
-                            val intent = Intent(requireContext(), EditSuratKeteranganActivity::class.java)
+                            val intent = Intent(requireContext(), EditSuratKtpActivity::class.java)
                             intent.putExtra("ID_SURAT", selectedSurat.id)
                             startActivity(intent)
                         }
