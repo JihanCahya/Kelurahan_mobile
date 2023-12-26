@@ -1,9 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VisiMisiKelurahanActivity">
+    android:background="@drawable/bg"
+    android:fillViewport="true"
+    tools:layout_editor_absoluteX="1dp"
+    tools:layout_editor_absoluteY="1dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity" >
+
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="84dp"
+            android:fontFamily="@font/abril_fatface"
+            android:text="VISI MISI"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="112dp"
+            android:fontFamily="@font/abril_fatface"
+            android:text="VISI"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.094"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView33" />
+
+        <TextView
+            android:id="@+id/textView45"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/abril_fatface"
+            android:text="MISI"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.094"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView44" />
+
+        <TextView
+            android:id="@+id/textView44"
+            android:layout_width="344dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="16dp"
+            android:text="Mewujudkan pelayanan publik yang memuaskan secara optimal"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView34" />
+
+        <TextView
+            android:id="@+id/textView46"
+            android:layout_width="344dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="8dp"
+            android:text="1. Mewujudkan pelayanan publik yang prima, baik, mudah,cepat dan tepat serta transparan"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView45" />
+
+        <TextView
+            android:id="@+id/textView47"
+            android:layout_width="346dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="8dp"
+            android:text="2. Mewujudkan pemerintahan kelurahan yang baik"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.522"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView46" />
+
+        <TextView
+            android:id="@+id/textView48"
+            android:layout_width="346dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="8dp"
+            android:text="3. Mewujudkan pelayanan prima"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.522"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView47" />
+
+        <TextView
+            android:id="@+id/textView49"
+            android:layout_width="346dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="8dp"
+            android:text="4. Meningkatkan disiplin aparatur kantor kelurahan"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.522"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView48" />
+
+        <TextView
+            android:id="@+id/textView50"
+            android:layout_width="346dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="8dp"
+            android:text="5. Meningkatkan kualitas sumber daya manusia (SDM) kantor kelurahan"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.522"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView49" />
+
+        <TextView
+            android:id="@+id/textView51"
+            android:layout_width="346dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="8dp"
+            android:text="6. Meningkatkan partisipasi masyarakat dalam pembangunanan"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.522"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView50" />
+
+        <TextView
+            android:id="@+id/textView52"
+            android:layout_width="346dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="8dp"
+            android:text="7. Meningkatkan pelayanan kepada masyarakat secara profesional"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.522"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView51" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
