@@ -8,8 +8,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.polinema.uas.sipkburengan.databinding.ActivityPengajuanKtpBinding
@@ -28,7 +31,20 @@ class PengajuanKtpActivity : AppCompatActivity() {
 
     private val uid: String?
         get() = FirebaseAuth.getInstance().currentUser?.uid
+    private fun getUserName(uid: String, onComplete: (String) -> Unit) {
+        val usersRef = FirebaseDatabase.getInstance().getReference("Data_user")
+        usersRef.child(uid).child("nama").addListenerForSingleValueEvent(object :
+            ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val userName = dataSnapshot.getValue(String::class.java) ?: ""
+                onComplete(userName)
+            }
 
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle errors
+            }
+        })
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         b = ActivityPengajuanKtpBinding.inflate(layoutInflater)
@@ -91,34 +107,43 @@ class PengajuanKtpActivity : AppCompatActivity() {
             val idPengajuan = databaseReference.push().key
             val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Date())
 
-            uploadImage(idPengajuan!!, "pengantar_rt", imageUriPengantarRT!!, currentDate)
-            uploadImage(idPengajuan, "ktp", imageUriKTP!!, currentDate)
-            uploadImage(idPengajuan, "kk", imageUriKK!!, currentDate)
-            uploadImage(idPengajuan, "akta", imageUriAkta!!, currentDate)
+            // Fetch user's name based on UID
+            getUserName(uid ?: "") { userName ->
+                uploadImage(idPengajuan!!, "pengantar_rt", imageUriPengantarRT!!, currentDate, userName)
+                uploadImage(idPengajuan, "ktp", imageUriKTP!!, currentDate, userName)
+                uploadImage(idPengajuan, "kk", imageUriKK!!, currentDate, userName)
+                uploadImage(idPengajuan, "akta", imageUriAkta!!, currentDate, userName)
 
-            val pengajuan = Pengajuan(
-                idPengajuan,
-                uid ?: "",
-                currentDate,
-                "Belum dicek",
-                "Surat Pengajuan Ktp",
-                b.spKtp.selectedItem.toString(),
-                imageUrlPengantarRT = imageUriPengantarRT.toString(),
-                imageUrlKTP = imageUriKTP.toString(),
-                imageUrlKK = imageUriKK.toString(),
-                imageUrlAkta = imageUriAkta.toString()
-            )
+                val pengajuan = Pengajuan(
+                    idPengajuan,
+                    uid ?: "",
+                    userName,
+                    currentDate,
+                    "Belum dicek",
+                    "Surat Pengajuan Ktp",
+                    b.spKtp.selectedItem.toString(),
+                    imageUrlPengantarRT = imageUriPengantarRT.toString(),
+                    imageUrlKTP = imageUriKTP.toString(),
+                    imageUrlKK = imageUriKK.toString(),
+                    imageUrlAkta = imageUriAkta.toString()
+                )
 
-            showSuccessDialog("Data Pengajuan berhasil diunggah!", idPengajuan)
+                showSuccessDialog("Data Pengajuan berhasil diunggah!", idPengajuan)
+            }
         } else {
             showErrorDialog("Pilih gambar Pengantar RT, KTP, KK, dan Akta terlebih dahulu")
         }
     }
 
-    private fun uploadImage(idPengajuan: String, imageType: String, imageUri: Uri, currentDate: String) {
-        val timestamp = System.currentTimeMillis() // timestamp untuk menyertakan waktu unik
+    private fun uploadImage(
+        idPengajuan: String,
+        imageType: String,
+        imageUri: Uri,
+        currentDate: String,
+        userName: String
+    ) {
+        val timestamp = System.currentTimeMillis()
 
-        // Format nama file dengan menambahkan timestamp dan jenis file ke dalamnya
         val fileName = "$idPengajuan-$imageType-$timestamp.jpg"
 
         val imageRef = storageReference.child("images/pengajuan_ktp/$fileName")
@@ -128,10 +153,11 @@ class PengajuanKtpActivity : AppCompatActivity() {
             imageRef.downloadUrl.addOnSuccessListener { uri ->
                 val imageUrl = uri.toString()
 
-                // Setelah mendapatkan URL gambar yang benar, simpan data ke Firebase Database
+                // Use the user name instead of UID in the Pengajuan object
                 val pengajuan = Pengajuan(
                     idPengajuan,
                     uid ?: "",
+                    userName,
                     currentDate,
                     "Belum dicek",
                     "Surat Pengajuan Ktp",
@@ -145,18 +171,18 @@ class PengajuanKtpActivity : AppCompatActivity() {
                 databaseReference.child(idPengajuan).setValue(pengajuan)
             }
         }.addOnFailureListener { exception ->
-            // Penanganan kesalahan jika ada kesalahan saat mengunggah gambar
             showErrorDialog("Terjadi kesalahan saat mengunggah gambar: ${exception.localizedMessage}")
         }.addOnProgressListener { taskSnapshot ->
-            // Handle progress events (if needed)
+            // Handle progress events if needed
             val progress = (100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount).toInt()
-            // Update progress UI or perform additional actions
         }
     }
+
 
     data class Pengajuan(
         val id: String = "",
         val id_pengaju: String = "",
+        val nama_pengaju: String = "",
         val tanggalPengajuan: String = "",
         val status: String = "",
         val surat: String = "",

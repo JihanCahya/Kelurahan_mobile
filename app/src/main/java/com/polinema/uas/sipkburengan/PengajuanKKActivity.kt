@@ -8,8 +8,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.polinema.uas.sipkburengan.databinding.ActivityPengajuanKkBinding
@@ -26,7 +29,20 @@ class PengajuanKKActivity : AppCompatActivity() {
     private val PICK_IMAGE_REQUEST = 1
 
     private val uid = FirebaseAuth.getInstance().currentUser?.uid
+    private fun getUserName(uid: String, onComplete: (String) -> Unit) {
+        val usersRef = FirebaseDatabase.getInstance().getReference("Data_user")
+        usersRef.child(uid).child("nama").addListenerForSingleValueEvent(object :
+            ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val userName = dataSnapshot.getValue(String::class.java) ?: ""
+                onComplete(userName)
+            }
 
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle errors
+            }
+        })
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         b = ActivityPengajuanKkBinding.inflate(layoutInflater)
@@ -59,29 +75,33 @@ class PengajuanKKActivity : AppCompatActivity() {
                 val idPengajuan = databaseReference.push().key
                 val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
 
-                uploadImage(idPengajuan!!, "pengantar_rt", imageUriPengantarRT!!, currentDate)
-                uploadImage(idPengajuan, "ktp", imageUriKTP!!, currentDate)
+                // Fetch user's name based on UID
+                getUserName(uid ?: "") { userName ->
+                    uploadImage(idPengajuan!!, "pengantar_rt", imageUriPengantarRT!!, currentDate, userName)
+                    uploadImage(idPengajuan, "ktp", imageUriKTP!!, currentDate, userName)
 
-                val pengajuan = Pengajuan(
-                    idPengajuan,
-                    uid ?: "",
-                    currentDate,
-                    "Belum dicek",
-                    "Surat Pengajuan KK",
-                    b.spKk.selectedItem.toString(),
-                    imageUriPengantarRT.toString(),
-                    imageUriKTP.toString()
-                )
+                    val pengajuan = Pengajuan(
+                        idPengajuan,
+                        uid ?: "",
+                        userName,
+                        currentDate,
+                        "Belum dicek",
+                        "Surat Pengajuan KK",
+                        b.spKk.selectedItem.toString(),
+                        imageUriPengantarRT.toString(),
+                        imageUriKTP.toString()
+                    )
 
-                databaseReference.child(idPengajuan).setValue(pengajuan)
-                showSuccessDialog("Data Pengajuan KK berhasil diunggah!")
+                    databaseReference.child(idPengajuan).setValue(pengajuan)
+                    showSuccessDialog("Data Pengajuan KK berhasil diunggah!")
+                }
             } else {
                 showErrorDialog("Pilih gambar Pengantar RT dan KTP terlebih dahulu")
             }
         }
     }
 
-    private fun uploadImage(idPengajuan: String, imageType: String, imageUri: Uri, currentDate: String) {
+    private fun uploadImage(idPengajuan: String, imageType: String, imageUri: Uri, currentDate: String,userName: String) {
         val timestamp = System.currentTimeMillis()
         val fileName = "$idPengajuan-$imageType-$timestamp.jpg"
 
@@ -100,6 +120,7 @@ class PengajuanKKActivity : AppCompatActivity() {
     data class Pengajuan(
         val id: String = "",
         val id_pengaju: String = "",
+        val nama_pengaju: String = "",
         val tanggalPengajuan: String = "",
         val status: String = "",
         val surat: String = "",

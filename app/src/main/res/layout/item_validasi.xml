@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvNamaValidasi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSuratValidasi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="@+id/tvNamaValidasi"
+        app:layout_constraintStart_toStartOf="@+id/tvNamaValidasi"
+        app:layout_constraintTop_toBottomOf="@+id/tvNamaValidasi" />
+
+    <TextView
+        android:id="@+id/tvJenisSuratValidasi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="@+id/tvSuratValidasi"
+        app:layout_constraintStart_toStartOf="@+id/tvSuratValidasi"
+        app:layout_constraintTop_toBottomOf="@+id/tvSuratValidasi" />
+
+    <TextView
+        android:id="@+id/tvTanggalValidasi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="@+id/tvJenisSuratValidasi"
+        app:layout_constraintStart_toStartOf="@+id/tvJenisSuratValidasi"
+        app:layout_constraintTop_toBottomOf="@+id/tvJenisSuratValidasi" />
+
+    <TextView
+        android:id="@+id/ketStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="KetStatus"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="@+id/tvTanggalValidasi"
+        app:layout_constraintTop_toBottomOf="@+id/tvTanggalValidasi" />
+
+    <Button
+        android:id="@+id/btnStatusValidasi"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:enabled="false"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="@+id/ketStatus"
+        app:layout_constraintTop_toTopOf="@+id/ketStatus"
+        tools:layout_editor_absoluteX="78dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

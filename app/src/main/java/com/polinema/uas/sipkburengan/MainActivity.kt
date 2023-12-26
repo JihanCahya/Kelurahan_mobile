@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     lateinit var dialog : AlertDialog.Builder
     private lateinit var b : ActivityMainBinding
     lateinit var fragInformasi : InformasiPenggunaActivity
+    lateinit var fragBantuan : BantuanPenggunaActivity
     lateinit var fragPengajuan : PengajuanSuratActivity
     lateinit var fragHistory : HistorySuratActivity
     lateinit var fragSejarah : ProfilKelurahanActivity
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         b.bottomNavigationView.setOnItemSelectedListener(this)
         fragInformasi = InformasiPenggunaActivity()
+        fragBantuan = BantuanPenggunaActivity()
         fragPengajuan = PengajuanSuratActivity()
         fragHistory = HistorySuratActivity()
         fragSejarah = ProfilKelurahanActivity()
@@ -87,13 +89,32 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 b.frameLayout1.visibility = View.GONE
             }
             R.id.itemInformasi -> {
-                ft = supportFragmentManager.beginTransaction()
-                ft.replace(R.id.frameLayout1, fragInformasi).commit()
-                b.frameLayout1.setBackgroundColor(
-                    Color.argb(255, 255, 255, 255)
-                )
-                b.frameLayout1.visibility = View.VISIBLE
-                true
+                val popupMenu = PopupMenu(this, findViewById(R.id.itemInformasi))
+                popupMenu.menuInflater.inflate(R.menu.submenu_informasi_pengguna, popupMenu.menu)
+                popupMenu.setOnMenuItemClickListener { subItem ->
+                    when (subItem.itemId) {
+                        R.id.subBantuan -> {
+                            ft = supportFragmentManager.beginTransaction()
+                            ft.replace(R.id.frameLayout1, fragBantuan).commit()
+                            b.frameLayout1.setBackgroundColor(
+                                Color.argb(255, 255, 255, 255)
+                            )
+                            b.frameLayout1.visibility = View.VISIBLE
+                            true
+                        }
+                        R.id.subBerita -> {
+                            ft = supportFragmentManager.beginTransaction()
+                            ft.replace(R.id.frameLayout1, fragInformasi).commit()
+                            b.frameLayout1.setBackgroundColor(
+                                Color.argb(255, 255, 255, 255)
+                            )
+                            b.frameLayout1.visibility = View.VISIBLE
+                            true
+                        }
+                        else -> false
+                    }
+                }
+                popupMenu.show()
             }
             R.id.itemAdministrasi -> {
                 val popupMenu = PopupMenu(this, findViewById(R.id.itemAdministrasi))
@@ -137,7 +158,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                             b.frameLayout1.visibility = View.VISIBLE
                             true
                         }
-                        R.id.subProfil -> {
+                        R.id.subVM -> {
                             ft = supportFragmentManager.beginTransaction()
                             ft.replace(R.id.frameLayout1, fragVisiMisi).commit()
                             b.frameLayout1.setBackgroundColor(
