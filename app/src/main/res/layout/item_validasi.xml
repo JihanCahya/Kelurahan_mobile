@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="KetStatus"
+        android:text="Status :"
         android:textColor="#000000"
         app:layout_constraintStart_toStartOf="@+id/tvTanggalValidasi"
         app:layout_constraintTop_toBottomOf="@+id/tvTanggalValidasi" />
@@ -65,9 +65,10 @@
         android:id="@+id/btnStatusValidasi"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:layout_marginStart="5dp"
         android:enabled="false"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="@+id/ketStatus"
-        app:layout_constraintTop_toTopOf="@+id/ketStatus"
-        tools:layout_editor_absoluteX="78dp" />
+        app:layout_constraintStart_toEndOf="@+id/ketStatus"
+        app:layout_constraintTop_toTopOf="@+id/ketStatus" />
 </androidx.constraintlayout.widget.ConstraintLayout>

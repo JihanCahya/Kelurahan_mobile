@@ -44,7 +44,7 @@ class ValidasiAdminActivity : Fragment() {
             if (selectedSurat != null){
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setTitle("Detail Surat")
-                builder.setMessage("Nama : ${selectedSurat.id_pengaju}\nSurat : ${selectedSurat.surat}\nJenis Surat : ${selectedSurat.jenisSurat}\nTanggal Pengajuan : ${selectedSurat.tanggalPengajuan}\nStatus : ${selectedSurat.status}")
+                builder.setMessage("Nama : ${selectedSurat.nama_pengaju}\nSurat : ${selectedSurat.surat}\nJenis Surat : ${selectedSurat.jenisSurat}\nTanggal Pengajuan : ${selectedSurat.tanggalPengajuan}\nStatus : ${selectedSurat.status}")
                 val status = selectedSurat.status
                 if (status == "Sudah diambil"){
                     builder.setPositiveButton("Arsipkan surat") { dialog, _ ->
@@ -106,7 +106,7 @@ class ValidasiAdminActivity : Fragment() {
 // =======================================================
 data class Validasi(
     val id: String,
-    val id_pengaju: String,
+    val nama_pengaju: String,
     val surat: String,
     val jenisSurat: String,
     val status: String,
@@ -116,7 +116,7 @@ data class Validasi(
     var imageUrlKTP: String,
     var imageUrlPengantarRT: String
 ) {
-    constructor() : this("", "", "", "","", "", "", "", "","")
+    constructor() : this( "","", "", "","", "", "", "", "","")
 }
 
 // ========================================================
@@ -143,8 +143,8 @@ class ValidasiAdapter(context: Context, data: List<Validasi>) :
                 tanggalTV.visibility = View.GONE
                 KeteranganStatus.visibility = View.GONE
                 status.visibility = View.GONE
-            } else{
-                namaTV.text = "Nama : ${validasi.id_pengaju}"
+            } else {
+                namaTV.text = "Nama : ${validasi.nama_pengaju}"
                 suratTV.text = "Surat : ${validasi.surat}"
                 jenisSuratTV.text = "Jenis : ${validasi.jenisSurat}"
                 tanggalTV.text = "Tanggal diajukan : ${validasi.tanggalPengajuan}"
