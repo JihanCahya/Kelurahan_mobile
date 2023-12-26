@@ -88,8 +88,11 @@ class PengajuanKKActivity : AppCompatActivity() {
                         "Belum dicek",
                         "Surat Pengajuan KK",
                         b.spKk.selectedItem.toString(),
+                        "-",
                         imageUriPengantarRT.toString(),
-                        imageUriKTP.toString()
+                        imageUriKTP.toString(),
+                        "-",
+                        "-"
                     )
 
                     databaseReference.child(idPengajuan).setValue(pengajuan)
@@ -125,8 +128,11 @@ class PengajuanKKActivity : AppCompatActivity() {
         val status: String = "",
         val surat: String = "",
         val jenisSurat: String = "",
+        val keterangan: String = "",
         val imageUrlPengantarRT: String = "",
-        val imageUrlKTP: String = ""
+        val imageUrlKTP: String = "",
+        val imageUrlKK: String = "",
+        val imageUrlAkta: String = ""
     )
 
     private fun showSuccessDialog(message: String) {

@@ -94,14 +94,16 @@ class PengajuanKeteranganActivity : AppCompatActivity() {
 
                 val pengajuan = Pengajuan(
                     idPengajuan,
-                    uid ?: "",
                     userName,
                     currentDate,
                     "Belum dicek",
                     "Surat Keterangan",
                     b.spKet.selectedItem.toString(),
+                    "-",
                     imageUriPengantarRT.toString(),
-                    imageUriKTP.toString()
+                    imageUriKTP.toString(),
+                    "-",
+                    "-"
                 )
 
                 databaseReference.child(idPengajuan).setValue(pengajuan)
@@ -131,14 +133,16 @@ class PengajuanKeteranganActivity : AppCompatActivity() {
 
     data class Pengajuan(
         val id: String = "",
-        val id_pengaju: String = "",
         val nama_pengaju: String = "",
         val tanggalPengajuan: String = "",
         val status: String = "",
         val surat: String = "",
         val jenisSurat: String = "",
+        val keterangan: String = "",
         val imageUrlPengantarRT: String = "",
-        val imageUrlKTP: String = ""
+        val imageUrlKTP: String = "",
+        val imageUrlKK: String = "",
+        val imageUrlAkta: String = ""
     )
 
     private fun showSuccessDialog(message: String, idPengajuan: String) {
