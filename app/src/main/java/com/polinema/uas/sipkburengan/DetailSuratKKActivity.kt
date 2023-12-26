@@ -131,9 +131,13 @@ class DetailSuratKKActivity : AppCompatActivity(), View.OnClickListener {
                             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(imageUrlPengantarRT))
                             startActivity(intent)
                         }
-
-                        val position = arrayStatusKK.indexOf(it.status)
-                        b.spStatusKK.setSelection(position)
+                        val status_surat = it.status
+                        if (status_surat == "Sudah diperbarui"){
+                            b.spStatusKK.setSelection(2)
+                        } else {
+                            val position = arrayStatusKK.indexOf(it.status)
+                            b.spStatusKK.setSelection(position)
+                        }
                     }
                 }
             }
