@@ -18,6 +18,7 @@ import com.google.firebase.storage.StorageReference
 import com.polinema.uas.sipkburengan.databinding.ActivityPengajuanKtpBinding
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class PengajuanKtpActivity : AppCompatActivity() {
     lateinit var b: ActivityPengajuanKtpBinding
@@ -92,48 +93,43 @@ class PengajuanKtpActivity : AppCompatActivity() {
         }
 
         btnSimpan.setOnClickListener {
-            uploadData()
+            if (imageUriPengantarRT != null && imageUriKTP != null && imageUriKK != null && imageUriAkta != null) {
+                val idPengajuan = databaseReference.push().key
+                val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+
+                // Fetch user's name based on UID
+                getUserName(uid ?: "") { userName ->
+                    uploadImage(idPengajuan!!, "pengantar_rt", imageUriPengantarRT!!, currentDate, userName)
+                    uploadImage(idPengajuan, "ktp", imageUriKTP!!, currentDate, userName)
+                    uploadImage(idPengajuan, "kk", imageUriKK!!, currentDate, userName)
+                    uploadImage(idPengajuan, "akta", imageUriAkta!!, currentDate, userName)
+
+                    val pengajuan = Pengajuan(
+                        idPengajuan,
+                        userName,
+                        currentDate,
+                        "Belum dicek",
+                        "Surat Pengajuan KK",
+                        b.spKtp.selectedItem.toString(),
+                        "-",
+                        imageUriPengantarRT.toString(),
+                        imageUriKTP.toString(),
+                        imageUriKK.toString(),
+                        imageUriAkta.toString()
+                    )
+                    databaseReference.child(idPengajuan).setValue(pengajuan)
+                    showSuccessDialog("Data Pengajuan Ktp berhasil diunggah!")
+                }
+            } else {
+                showErrorDialog("Pilih gambar Pengantar RT dan KTP terlebih dahulu")
+            }
         }
     }
 
     private fun launchImagePicker(requestCode: Int) {
         val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
+        intent.type = "image/pengajuan_ktp/*"
         startActivityForResult(intent, requestCode)
-    }
-
-    private fun uploadData() {
-        if (imageUriPengantarRT != null && imageUriKTP != null && imageUriKK != null && imageUriAkta != null) {
-            val idPengajuan = databaseReference.push().key
-            val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Date())
-
-            // Fetch user's name based on UID
-            getUserName(uid ?: "") { userName ->
-                uploadImage(idPengajuan!!, "pengantar_rt", imageUriPengantarRT!!, currentDate, userName)
-                uploadImage(idPengajuan, "ktp", imageUriKTP!!, currentDate, userName)
-                uploadImage(idPengajuan, "kk", imageUriKK!!, currentDate, userName)
-                uploadImage(idPengajuan, "akta", imageUriAkta!!, currentDate, userName)
-
-                val pengajuan = Pengajuan(
-                    idPengajuan,
-                    uid ?: "",
-                    userName,
-                    currentDate,
-                    "Belum dicek",
-                    "Surat Pengajuan Ktp",
-                    b.spKtp.selectedItem.toString(),
-                    "-",
-                    imageUrlPengantarRT = imageUriPengantarRT.toString(),
-                    imageUrlKTP = imageUriKTP.toString(),
-                    imageUrlKK = imageUriKK.toString(),
-                    imageUrlAkta = imageUriAkta.toString()
-                )
-
-                showSuccessDialog("Data Pengajuan berhasil diunggah!", idPengajuan)
-            }
-        } else {
-            showErrorDialog("Pilih gambar Pengantar RT, KTP, KK, dan Akta terlebih dahulu")
-        }
     }
 
     private fun uploadImage(
@@ -146,7 +142,7 @@ class PengajuanKtpActivity : AppCompatActivity() {
         val timestamp = System.currentTimeMillis()
         val fileName = "$idPengajuan-$imageType-$timestamp.jpg"
 
-        val imageRef = storageReference.child("images/pengajuan_keterangan/$fileName")
+        val imageRef = storageReference.child("images/pengajuan_kk/$fileName")
         val uploadTask = imageRef.putFile(imageUri)
 
         uploadTask.addOnSuccessListener { taskSnapshot ->
@@ -172,15 +168,13 @@ class PengajuanKtpActivity : AppCompatActivity() {
             "pengantar_rt" -> databaseRef.child("imageUrlPengantarRT").setValue(imageUrl)
             "ktp" -> databaseRef.child("imageUrlKTP").setValue(imageUrl)
             "kk" -> databaseRef.child("imageUrlKK").setValue(imageUrl)
-            "akta" -> databaseRef.child("imageUriAkta").setValue(imageUrl)
+            "akta" -> databaseRef.child("imageUrlAkta").setValue(imageUrl)
             // Add more cases for other image types if needed
         }
     }
 
-
     data class Pengajuan(
         val id: String = "",
-        val id_pengaju: String = "",
         val nama_pengaju: String = "",
         val tanggalPengajuan: String = "",
         val status: String = "",
@@ -193,18 +187,16 @@ class PengajuanKtpActivity : AppCompatActivity() {
         val imageUrlAkta: String = ""
     )
 
-    private fun showSuccessDialog(message: String, idPengajuan: String) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("BERHASIL")
-        builder.setMessage(message)
-        builder.setPositiveButton("Ok") { _, _ ->
-            // Setelah menambahkan data, tampilkan notifikasi berhasil
-            showToast("Data Pengajuan berhasil diunggah!")
-
-            // Kembali ke MainActivity
-            val mainIntent = Intent(this, MainActivity::class.java)
-            startActivity(mainIntent)
-            finish()
+    private fun showSuccessDialog(message: String) {
+        val builder = AlertDialog.Builder(this).apply {
+            setTitle("BERHASIL")
+            setMessage(message)
+            setPositiveButton("Ok") { _, _ ->
+                showToast("Data Pengajuan Ktp berhasil diunggah!")
+                val mainIntent = Intent(this@PengajuanKtpActivity, MainActivity::class.java)
+                startActivity(mainIntent)
+                finish()
+            }
         }
         val dialog = builder.create()
         dialog.show()
