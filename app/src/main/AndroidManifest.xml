@@ -16,6 +16,9 @@
             android:name=".DetailHistoryAdmin"
             android:exported="false" />
         <activity
+            android:name=".EditSuratKtpActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditSuratKKActivity"
             android:exported="false" />
         <activity
