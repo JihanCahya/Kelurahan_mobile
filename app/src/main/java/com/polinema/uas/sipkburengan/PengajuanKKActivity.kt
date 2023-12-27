@@ -70,6 +70,9 @@ class PengajuanKKActivity : AppCompatActivity() {
         btnPilihGambarRT.setOnClickListener {
             launchImagePicker(PICK_IMAGE_REQUEST)
         }
+        b.backKk.setOnClickListener {
+            finish()
+        }
 
         btnSimpan.setOnClickListener {
             if (imageUriPengantarRT != null && imageUriKTP != null) {

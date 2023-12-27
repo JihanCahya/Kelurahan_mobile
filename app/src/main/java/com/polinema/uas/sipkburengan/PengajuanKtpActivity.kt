@@ -126,6 +126,10 @@ class PengajuanKtpActivity : AppCompatActivity() {
                 showErrorDialog("Pilih gambar Pengantar RT dan KTP terlebih dahulu")
             }
         }
+
+        b.backKtp.setOnClickListener {
+            finish()
+        }
     }
 
     private fun launchImagePicker(requestCode: Int) {

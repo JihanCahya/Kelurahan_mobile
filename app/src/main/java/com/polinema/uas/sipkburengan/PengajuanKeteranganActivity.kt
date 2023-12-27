@@ -75,6 +75,10 @@ class PengajuanKeteranganActivity : AppCompatActivity() {
         btnSimpan.setOnClickListener {
             uploadData()
         }
+
+        b.backKeterangan.setOnClickListener {
+            finish()
+        }
     }
 
     private fun launchImagePicker(requestCode: Int) {
