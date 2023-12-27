@@ -45,7 +45,7 @@ class ProfilKelurahanActivity : Fragment() {
 
     private fun fetchStrukturData() {
         val adapter = b.lvPegawaiKelurahan.adapter as strukturAdapter
-        db.addListenerForSingleValueEvent(object : ValueEventListener {
+        db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val pegawaiData = ArrayList<Pegawai>()
                 for (childSnapshot in dataSnapshot.children) {

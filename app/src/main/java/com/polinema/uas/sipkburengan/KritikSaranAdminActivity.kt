@@ -124,7 +124,7 @@ class KritikSaranAdminActivity : Fragment() {
 
     private fun fetchPesanData() {
         val adapter = b.lvKritikSaran.adapter as PesanAdapter
-        db.addListenerForSingleValueEvent(object : ValueEventListener {
+        db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val pesanData = ArrayList<Pesan>()
                 for (childSnapshot in dataSnapshot.children) {

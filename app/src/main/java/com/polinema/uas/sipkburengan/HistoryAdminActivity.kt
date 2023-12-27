@@ -60,7 +60,7 @@ class HistoryAdminActivity : Fragment() {
 
     private fun fetchHistoryData() {
         val adapter = b.lsHsitoryAdmin.adapter as ArsipAdapter
-        db.addListenerForSingleValueEvent(object : ValueEventListener {
+        db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val arsipData = ArrayList<Arsip>()
                 for (childSnapshot in dataSnapshot.children) {

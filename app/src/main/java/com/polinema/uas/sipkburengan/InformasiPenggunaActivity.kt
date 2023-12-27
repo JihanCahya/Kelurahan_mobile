@@ -56,7 +56,7 @@ class InformasiPenggunaActivity : Fragment() {
 
     private fun fetchBeritaData() {
         val adapter = b.lvBerita.adapter as BeritaAdapter
-        db.addListenerForSingleValueEvent(object : ValueEventListener {
+        db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val beritaData = ArrayList<Berita>()
                 for (childSnapshot in dataSnapshot.children) {

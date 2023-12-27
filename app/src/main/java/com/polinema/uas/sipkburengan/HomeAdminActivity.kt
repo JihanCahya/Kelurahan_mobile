@@ -76,7 +76,7 @@ class HomeAdminActivity : Fragment() {
 
     private fun get_count(status:String) {
         db.orderByChild("status").equalTo(status)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     totalCount = dataSnapshot.childrenCount.toString()
                     if(status == "Belum dicek"){
@@ -98,7 +98,7 @@ class HomeAdminActivity : Fragment() {
 
     private fun fetchUserData() {
         val adapter = b.lvUserSIPK.adapter as DataUserAdapter
-        db_user.addListenerForSingleValueEvent(object : ValueEventListener {
+        db_user.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val userData = ArrayList<DataUser>()
                 for (childSnapshot in dataSnapshot.children) {
