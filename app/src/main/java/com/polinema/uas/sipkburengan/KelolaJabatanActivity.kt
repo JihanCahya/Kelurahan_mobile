@@ -138,7 +138,7 @@ class KelolaJabatanActivity : Fragment(), View.OnClickListener {
 
     private fun fetchInformasiData() {
         val adapter = b.lvJabatan.adapter as JabatanAdapter
-        db.addListenerForSingleValueEvent(object : ValueEventListener {
+        db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val jabatanData = ArrayList<Jabatan>()
                 for (childSnapshot in dataSnapshot.children) {

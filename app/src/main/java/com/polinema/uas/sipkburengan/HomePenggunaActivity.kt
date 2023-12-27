@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -66,24 +67,28 @@ class HomePenggunaActivity : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
+        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView)
         when(v?.id){
             R.id.imvBeritaHome -> {
                 val informasiFragment = InformasiPenggunaActivity()
                 fragmentTransaction.replace(R.id.frameLayout1, informasiFragment)
                 fragmentTransaction.addToBackStack(null)
                 fragmentTransaction.commit()
+                bottomNavigationView.selectedItemId = R.id.itemInformasi
             }
             R.id.imvLayananHome -> {
                 val layananFragment = PengajuanSuratActivity()
                 fragmentTransaction.replace(R.id.frameLayout1, layananFragment)
                 fragmentTransaction.addToBackStack(null)
                 fragmentTransaction.commit()
+                bottomNavigationView.selectedItemId = R.id.itemAdministrasi
             }
             R.id.imvKritikHome -> {
                 val kritikFragment = KritikSaranPenggunaActivity()
                 fragmentTransaction.replace(R.id.frameLayout1, kritikFragment)
                 fragmentTransaction.addToBackStack(null)
                 fragmentTransaction.commit()
+                bottomNavigationView.selectedItemId = R.id.itemProfil
             }
         }
     }

@@ -90,7 +90,7 @@ class InformasiAdminActivity : Fragment() {
 
     private fun fetchInformasiData() {
         val adapter = b.lvInformasi.adapter as InformasiAdapter
-        db.addListenerForSingleValueEvent(object : ValueEventListener {
+        db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val informasiData = ArrayList<Informasi>()
                 for (childSnapshot in dataSnapshot.children) {

@@ -87,7 +87,7 @@ class KelolaPegawaiActivity : Fragment() {
 
     private fun fetchPegawaiData() {
         val adapter = b.lvPegawai.adapter as PegawaiAdapter
-        db.addListenerForSingleValueEvent(object : ValueEventListener {
+        db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val pegawaiData = ArrayList<Pegawai>()
                 for (childSnapshot in dataSnapshot.children) {

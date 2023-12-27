@@ -1,7 +1,9 @@
 package com.polinema.uas.sipkburengan
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -49,8 +51,10 @@ class HomeAdminActivity : Fragment() {
                 val builder = AlertDialog.Builder(thisParent)
                 builder.setTitle("Detail User")
                 builder.setMessage("Nama : ${selectedUser.nama}\nNIK : ${selectedUser.nik}\nAlamat : ${selectedUser.alamat}\nAkses : ${selectedUser.akses}\nEmail : ${selectedUser.email}\nNo HP : ${selectedUser.no}")
-                builder.setNegativeButton("Edit") { dialog, _ ->
-                    Toast.makeText(thisParent, "edit data user", Toast.LENGTH_SHORT).show()
+                builder.setNegativeButton("Lihat foto") { dialog, _ ->
+                    val foto = selectedUser.image
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(foto))
+                    startActivity(intent)
                 }
                 builder.show()
             }
@@ -72,7 +76,7 @@ class HomeAdminActivity : Fragment() {
 
     private fun get_count(status:String) {
         db.orderByChild("status").equalTo(status)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     totalCount = dataSnapshot.childrenCount.toString()
                     if(status == "Belum dicek"){
@@ -94,7 +98,7 @@ class HomeAdminActivity : Fragment() {
 
     private fun fetchUserData() {
         val adapter = b.lvUserSIPK.adapter as DataUserAdapter
-        db_user.addListenerForSingleValueEvent(object : ValueEventListener {
+        db_user.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val userData = ArrayList<DataUser>()
                 for (childSnapshot in dataSnapshot.children) {

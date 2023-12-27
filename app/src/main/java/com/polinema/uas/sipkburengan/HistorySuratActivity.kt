@@ -90,7 +90,7 @@ class HistorySuratActivity : Fragment() {
 
     private fun fetchHistoryData() {
         val adapter = b.lvhistory.adapter as HistoryAdapter
-        db.orderByChild("id_pengaju").equalTo(uid).addListenerForSingleValueEvent(object : ValueEventListener {
+        db.orderByChild("id_pengaju").equalTo(uid).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val historyData = ArrayList<History>()
                 for (childSnapshot in dataSnapshot.children) {

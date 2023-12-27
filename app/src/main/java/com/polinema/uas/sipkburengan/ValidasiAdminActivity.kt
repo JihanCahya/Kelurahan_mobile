@@ -83,7 +83,7 @@ class ValidasiAdminActivity : Fragment() {
 
     private fun fetchValidasiData() {
         val adapter = b.lvValidasi.adapter as ValidasiAdapter
-        db.addListenerForSingleValueEvent(object : ValueEventListener {
+        db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val validasiData = ArrayList<Validasi>()
                 for (childSnapshot in dataSnapshot.children) {

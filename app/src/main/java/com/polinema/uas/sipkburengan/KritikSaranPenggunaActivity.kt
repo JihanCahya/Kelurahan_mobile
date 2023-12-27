@@ -107,7 +107,7 @@ class KritikSaranPenggunaActivity : Fragment() {
 
     private fun fetchKritikData() {
         val adapter = b.lvKritik.adapter as KritikAdapter
-        db.addListenerForSingleValueEvent(object : ValueEventListener {
+        db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val kritikData = ArrayList<Kritik>()
                 for (childSnapshot in dataSnapshot.children) {
