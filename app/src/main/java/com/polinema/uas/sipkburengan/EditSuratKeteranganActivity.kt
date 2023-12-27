@@ -204,7 +204,7 @@ class EditSuratKeteranganActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun uploadImage(imageType: String, imageUri: Uri, timestamp: Long, onComplete: (String) -> Unit) {
         val fileName = "$suratId-$imageType-$timestamp.jpg"
-        val imageRef = storageReference.child("images/pengajuan_kk/$fileName")
+        val imageRef = storageReference.child("images/pengajuan_keterangan/$fileName")
 
         val uploadTask = imageRef.putFile(imageUri)
 

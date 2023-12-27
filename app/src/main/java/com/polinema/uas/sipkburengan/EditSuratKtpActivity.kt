@@ -82,7 +82,7 @@ class EditSuratKtpActivity : AppCompatActivity() , View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.btnSimpanEdKk -> {
+            R.id.btnSimpanEdKtp -> {
                 if (imageUriKtp != null || imageUriPengantarRt != null || imageUriKK != null || imageUriAkta != null) {
                     // Check if KTP image is selected
                     if (imageUriKtp != null) {
@@ -94,12 +94,12 @@ class EditSuratKtpActivity : AppCompatActivity() , View.OnClickListener {
                         uploadAndUpdateImage("pengantar_rt", imageUriPengantarRt!!)
                     }
                     if (imageUriKK != null) {
-                        uploadAndUpdateImage("ktp", imageUriKK!!)
+                        uploadAndUpdateImage("kk", imageUriKK!!)
                     }
 
                     // Check if Pengantar RT image is selected
                     if (imageUriAkta != null) {
-                        uploadAndUpdateImage("pengantar_rt", imageUriAkta!!)
+                        uploadAndUpdateImage("akta", imageUriAkta!!)
                     }
                 } else {
                     // No new images selected, update other fields and save the updated History object
@@ -179,7 +179,7 @@ class EditSuratKtpActivity : AppCompatActivity() , View.OnClickListener {
                     // Load the selected image using Glide or your preferred image-loading library
                     Glide.with(this@EditSuratKtpActivity)
                         .load(imageUriKtp)
-                        .into(b.imEdKkKtp)
+                        .into(b.imEdKiaKtp)
                 }
                 PICK_IMAGE_REQUEST_PENGANTAR_RT -> {
                     imageUriPengantarRt = data.data
@@ -189,7 +189,7 @@ class EditSuratKtpActivity : AppCompatActivity() , View.OnClickListener {
                         .into(b.imPengantarKtp)
                 }
                 PICK_IMAGE_REQUEST_KK -> {
-                    imageUriKtp = data.data
+                    imageUriKK = data.data
                     // Load the selected image using Glide or your preferred image-loading library
                     Glide.with(this@EditSuratKtpActivity)
                         .load(imageUriKK)
@@ -261,7 +261,7 @@ class EditSuratKtpActivity : AppCompatActivity() , View.OnClickListener {
 
     private fun uploadImage(imageType: String, imageUri: Uri, timestamp: Long, onComplete: (String) -> Unit) {
         val fileName = "$suratId-$imageType-$timestamp.jpg"
-        val imageRef = storageReference.child("images/pengajuan_kk/$fileName")
+        val imageRef = storageReference.child("images/pengajuan_ktp/$fileName")
 
         val uploadTask = imageRef.putFile(imageUri)
 
