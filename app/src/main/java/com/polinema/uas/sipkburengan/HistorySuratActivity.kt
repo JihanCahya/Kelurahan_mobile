@@ -117,7 +117,7 @@ data class History(
     val nama_pengaju: String,
     val surat: String,
     val jenisSurat: String,
-    val status: String,
+    var status: String,
     var tanggalPengajuan: String,
     var keterangan: String,
     var imageUrlAkta: String,

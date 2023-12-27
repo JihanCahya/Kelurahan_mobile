@@ -9,18 +9,17 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.polinema.uas.sipkburengan.databinding.ActivityEditKkBinding
-import java.util.Calendar
+import java.util.*
 
 class EditSuratKKActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var b: ActivityEditKkBinding
     private lateinit var db: DatabaseReference
+    private lateinit var storageReference: StorageReference
     private lateinit var suratId: String
     lateinit var adapterSpin: ArrayAdapter<String>
     val arrayJenisKK = arrayOf("KK Baru", "KK Hilang")
@@ -39,6 +38,8 @@ class EditSuratKKActivity : AppCompatActivity(), View.OnClickListener {
     // New properties for image selection
     private var imageUriKtp: Uri? = null
     private var imageUriPengantarRt: Uri? = null
+    private lateinit var oldImageUrlKTP: String
+    private lateinit var oldImageUrlPengantarRT: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,17 +47,13 @@ class EditSuratKKActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(b.root)
 
         db = FirebaseDatabase.getInstance().getReference("Pengajuan")
+        storageReference = FirebaseStorage.getInstance().reference
         suratId = intent.getStringExtra("ID_SURAT") ?: ""
 
         adapterSpin = ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayJenisKK)
         b.spEdKk.adapter = adapterSpin
         b.spEdKk.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 // Handle item selection if needed
             }
 
@@ -77,26 +74,21 @@ class EditSuratKKActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnSimpanEdKk -> {
-                // Check if KTP and Pengantar RT images are selected
-                if (imageUriKtp != null && imageUriPengantarRt != null) {
-                    // Upload the new images to Firebase Storage or your preferred storage
-                    // Update the imageUrlKTP and imageUrlPengantarRT properties in the History object
-                    // ...
-                }
+                if (imageUriKtp != null || imageUriPengantarRt != null) {
+                    // Check if KTP image is selected
+                    if (imageUriKtp != null) {
+                        uploadAndUpdateImage("ktp", imageUriKtp!!)
+                    }
 
-                // Update other fields and save the updated History object
-                val suratKK = History(
-                    suratId, id_pengaju, nama_pengaju, nama_surat,
-                    adapterSpin.getItem(b.spEdKk.selectedItemPosition)!!,status,
-                    tanggalPengajuan, keterangan, imageUrlAkta, imageUrlKK, imageUrlKTP, imageUrlPengantarRT, tanggalSelesai
-                )
-
-                db.child(suratId).setValue(suratKK).addOnSuccessListener {
-                    AlertDialog.Builder(this).apply {
-                        setTitle("BERHASIL")
-                        setMessage("Data History berhasil diperbarui !")
-                        setPositiveButton("Ya") { _, _ -> finish() }
-                    }.create().show()
+                    // Check if Pengantar RT image is selected
+                    if (imageUriPengantarRt != null) {
+                        uploadAndUpdateImage("pengantar_rt", imageUriPengantarRt!!)
+                    }
+                } else {
+                    // No new images selected, update other fields and save the updated History object
+                    val suratKK = createHistoryObject()
+                    suratKK.status = "Sudah diperbarui"
+                    updateDatabase(suratKK)
                 }
             }
             R.id.edFcKtp_Kk -> {
@@ -109,7 +101,23 @@ class EditSuratKKActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+    private fun uploadAndUpdateImage(imageType: String, imageUri: Uri) {
+        val timestamp = System.currentTimeMillis()
 
+        // Upload the selected image
+        uploadImage(imageType, imageUri, timestamp) { imageUrl ->
+            // Update the corresponding field in the History object
+            when (imageType) {
+                "ktp" -> imageUrlKTP = imageUrl
+                "pengantar_rt" -> imageUrlPengantarRT = imageUrl
+            }
+
+            // Update other fields and save the updated History object
+            val suratKK = createHistoryObject()
+            suratKK.status = "Sudah diperbarui"
+            updateDatabase(suratKK)
+        }
+    }
     private fun openFileChooserKtp() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -159,6 +167,8 @@ class EditSuratKKActivity : AppCompatActivity(), View.OnClickListener {
                             imageUrlKK = it.imageUrlKK
                             imageUrlKTP = it.imageUrlKTP
                             imageUrlPengantarRT = it.imageUrlPengantarRT
+                            oldImageUrlKTP = it.imageUrlKTP  // Store the old KTP image URL
+                            oldImageUrlPengantarRT = it.imageUrlPengantarRT  // Store the old Pengantar RT image URL
                             status = it.status
                             nama_pengaju = it.nama_pengaju
                             nama_surat = it.surat
@@ -186,6 +196,50 @@ class EditSuratKKActivity : AppCompatActivity(), View.OnClickListener {
                 // Handle the error, if any.
             }
         })
+    }
+
+    private fun uploadImage(imageType: String, imageUri: Uri, timestamp: Long, onComplete: (String) -> Unit) {
+        val fileName = "$suratId-$imageType-$timestamp.jpg"
+        val imageRef = storageReference.child("images/pengajuan_kk/$fileName")
+
+        val uploadTask = imageRef.putFile(imageUri)
+
+        uploadTask.addOnSuccessListener { taskSnapshot ->
+            imageRef.downloadUrl.addOnSuccessListener { uri ->
+                val imageUrl = uri.toString()
+                onComplete(imageUrl)
+            }
+        }.addOnFailureListener { exception ->
+            showErrorDialog("Terjadi kesalahan saat mengunggah gambar: ${exception.localizedMessage}")
+        }
+    }
+
+    private fun showErrorDialog(message: String) {
+        AlertDialog.Builder(this).apply {
+            setTitle("Error")
+            setMessage(message)
+            setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+        }.create().show()
+    }
+
+    private fun updateDatabase(suratKK: History) {
+        db.child(suratId).setValue(suratKK).addOnSuccessListener {
+            AlertDialog.Builder(this).apply {
+                setTitle("BERHASIL")
+                setMessage("Data History berhasil diperbarui !")
+                setPositiveButton("Ya") { _, _ -> finish() }
+            }.create().show()
+        }
+    }
+
+    private fun createHistoryObject(): History {
+        return History(
+            suratId, id_pengaju, nama_pengaju, nama_surat,
+            adapterSpin.getItem(b.spEdKk.selectedItemPosition)!!, status,
+            tanggalPengajuan, keterangan, imageUrlAkta, imageUrlKK, imageUrlKTP, imageUrlPengantarRT, tanggalSelesai
+        )
     }
 
     // Constants for image selection
