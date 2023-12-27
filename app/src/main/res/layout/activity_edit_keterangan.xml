@@ -66,19 +66,21 @@
 
     <ImageView
         android:id="@+id/imEdKtp_Ket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@+id/textView60"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView60"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <ImageView
         android:id="@+id/imEdPengantar_Ket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@+id/textView61"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView61"
         app:srcCompat="@drawable/ic_launcher_background" />
 
@@ -110,11 +112,10 @@
         android:id="@+id/edPengantarRt_Ket"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
         android:text="Browse"
         app:icon="@drawable/baseline_drive_folder_upload_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.851"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imEdPengantar_Ket" />
 
     <Spinner

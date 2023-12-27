@@ -26,7 +26,7 @@ class EditSuratKeteranganActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var storageReference: StorageReference
     private lateinit var suratId: String
     lateinit var adapterSpin: ArrayAdapter<String>
-    val arrayStatusKeterangan = arrayOf("Belum dicek", "Belum terpenuhi", "Terpenuhi", "Sudah diambil")
+    val arrayStatusKeterangan = arrayOf("Keterangan Menikah", "Keterangan Pindah", "Keterangan Cerai", "Keterangan Kematian")
     lateinit var imageUrlAkta: String
     lateinit var imageUrlKK: String
     lateinit var imageUrlKTP: String
@@ -77,7 +77,7 @@ class EditSuratKeteranganActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.btnSimpanEdKk -> {
+            R.id.btnSimpanEdKet -> {
                 if (imageUriKtp != null || imageUriPengantarRt != null) {
                     // Check if KTP image is selected
                     if (imageUriKtp != null) {
@@ -95,11 +95,11 @@ class EditSuratKeteranganActivity : AppCompatActivity(), View.OnClickListener {
                     updateDatabase(suratKK)
                 }
             }
-            R.id.edFcKtp_Kk -> {
+            R.id.edFcKtp_Ket -> {
                 // Open the file picker for KTP
                 openFileChooserKtp()
             }
-            R.id.edPengantarRt_Kk -> {
+            R.id.edPengantarRt_Ket -> {
                 // Open the file picker for Pengantar RT
                 openFileChooserPengantarRt()
             }
@@ -232,7 +232,7 @@ class EditSuratKeteranganActivity : AppCompatActivity(), View.OnClickListener {
         db.child(suratId).setValue(suratKK).addOnSuccessListener {
             AlertDialog.Builder(this).apply {
                 setTitle("BERHASIL")
-                setMessage("Data History berhasil diperbarui !")
+                setMessage("Data berhasil diperbarui !")
                 setPositiveButton("Ya") { _, _ -> finish() }
             }.create().show()
         }

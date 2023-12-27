@@ -228,7 +228,7 @@ class EditSuratKKActivity : AppCompatActivity(), View.OnClickListener {
         db.child(suratId).setValue(suratKK).addOnSuccessListener {
             AlertDialog.Builder(this).apply {
                 setTitle("BERHASIL")
-                setMessage("Data History berhasil diperbarui !")
+                setMessage("Data berhasil diperbarui !")
                 setPositiveButton("Ya") { _, _ -> finish() }
             }.create().show()
         }
